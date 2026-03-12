@@ -1231,7 +1231,7 @@ async function uploadToGemini(file, apiKey) {
       `https://generativelanguage.googleapis.com/v1beta/files/${fileId}?key=${apiKey}`
     );
     const statusData = await statusRes.json();
-    const state = statusData.file?.state;
+    const state = statusData?.state || statusData?.file?.state;
     const elapsed = pollSchedule.slice(0, i+1).reduce((a,b) => a+b, 0) / 1000;
     logProgress(`File state: ${state} (${Math.round(elapsed)}s elapsed)`);
     if (state === 'ACTIVE') {
