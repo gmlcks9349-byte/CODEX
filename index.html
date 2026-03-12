@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CODEX — AI CREATIVE LAB</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #E8A020;
+    --accent-dim: #a06e14;
+    --bg: #0a0a0a;
+    --bg-2: #111111;
+    --bg-3: #1a1a1a;
+    --bg-4: #222222;
+    --border: #2a2a2a;
+    --border-bright: #3a3a3a;
+    --text: #e8e8e8;
+    --text-dim: #888888;
+    --text-dimmer: #444444;
+    --danger: #e84040;
+    --success: #40e880;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 48px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--accent);
+  }
+
+  .logo-sep {
+    color: var(--border-bright);
+    font-size: 16px;
+  }
+
+  .logo-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .api-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-dimmer);
+  }
+  .status-dot.ok { background: var(--success); }
+  .status-dot.err { background: var(--danger); }
+
+  .btn-header {
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 5px 12px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+  .btn-header:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* LEFT PANEL — ARCHIVE */
+  .panel-left {
+    width: 280px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+
+  .panel-header {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+  }
+
+  .archive-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+  }
+
+  /* GENRE FILTER */
+  .genre-filter {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .genre-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border: 1px solid var(--border-bright);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+    text-transform: uppercase;
+  }
+  .genre-tag:hover, .genre-tag.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232, 160, 32, 0.06);
+  }
+  .genre-tag.all.active {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* ARCHIVE LIST */
+  .archive-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+
+  .archive-list::-webkit-scrollbar { width: 3px; }
+  .archive-list::-webkit-scrollbar-track { background: transparent; }
+  .archive-list::-webkit-scrollbar-thumb { background: var(--border-bright); }
+
+  .archive-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+    position: relative;
+  }
+  .archive-item:hover { background: var(--bg-2); }
+  .archive-item.active {
+    background: var(--bg-3);
+    border-left: 2px solid var(--accent);
+    padding-left: 14px;
+  }
+
+  .archive-thumb {
+    width: 52px;
+    height: 32px;
+    object-fit: cover;
+    background: var(--bg-4);
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+
+  .archive-thumb-placeholder {
+    width: 52px;
+    height: 32px;
+    background: var(--bg-4);
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dimmer);
+    font-size: 14px;
+  }
+
+  .archive-info { flex: 1; min-width: 0; }
+
+  .archive-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+
+  .archive-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .archive-genre {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .archive-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--text-dimmer);
+  }
+
+  .archive-delete {
+    opacity: 0;
+    background: transparent;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+  }
+  .archive-item:hover .archive-delete { opacity: 1; }
+
+  .archive-empty {
+    padding: 40px 16px;
+    text-align: center;
+    color: var(--text-dimmer);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    line-height: 1.8;
+  }
+
+  /* NEW ANALYSIS BUTTON */
+  .btn-new {
+    margin: 12px 16px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .btn-new:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* RIGHT PANEL */
+  .panel-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  /* UPLOAD VIEW */
+  .view-upload {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 40px;
+  }
+
+  .upload-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .upload-title span { color: var(--accent); }
+
+  .upload-zone {
+    width: 100%;
+    max-width: 560px;
+    border: 1px dashed var(--border-bright);
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--accent);
+    background: rgba(232, 160, 32, 0.04);
+  }
+
+  .upload-zone input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .upload-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--text-dimmer);
+  }
+
+  .upload-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .upload-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dimmer);
+  }
+
+  .upload-config {
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .config-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .config-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    width: 80px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .config-input {
+    flex: 1;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .config-input:focus { border-color: var(--accent); }
+
+  .genre-select-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .genre-select-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-bright);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+    text-transform: uppercase;
+  }
+  .genre-select-btn.selected {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232, 160, 32, 0.08);
+  }
+
+  .file-selected-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .file-selected-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .file-selected-size {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dimmer);
+    flex-shrink: 0;
+  }
+
+  .btn-analyze {
+    width: 100%;
+    max-width: 560px;
+    padding: 14px;
+    background: var(--accent);
+    border: none;
+    color: var(--bg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-analyze:hover { background: #f0b030; }
+  .btn-analyze:disabled {
+    background: var(--bg-4);
+    color: var(--text-dimmer);
+    cursor: not-allowed;
+  }
+
+  /* PROGRESS VIEW */
+  .view-progress {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+  }
+
+  .progress-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+  }
+
+  .progress-stage {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    min-height: 16px;
+  }
+
+  .progress-bar-wrap {
+    width: 360px;
+    height: 2px;
+    background: var(--bg-4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-bar-scan {
+    position: absolute;
+    top: 0; left: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scan 1.5s infinite;
+  }
+
+  @keyframes scan {
+    from { left: -40%; }
+    to { left: 140%; }
+  }
+
+  .progress-log {
+    width: 360px;
+    max-height: 120px;
+    overflow-y: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dimmer);
+    line-height: 1.8;
+  }
+  .progress-log::-webkit-scrollbar { width: 2px; }
+  .progress-log::-webkit-scrollbar-thumb { background: var(--border); }
+
+  /* RESULT VIEW */
+  .view-result {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .result-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    background: var(--bg-2);
+  }
+
+  .result-title-block { flex: 1; min-width: 0; }
+
+  .result-video-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .result-genre-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    padding: 2px 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  .result-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .btn-action {
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 6px 12px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.15s;
+    text-transform: uppercase;
+  }
+  .btn-action:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-action.primary {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-action.primary:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* TABS */
+  .result-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--bg);
+  }
+
+  .tab-btn {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-dimmer);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .tab-btn:hover { color: var(--text-dim); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* RESULT CONTENT */
+  .result-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .result-content::-webkit-scrollbar { width: 3px; }
+  .result-content::-webkit-scrollbar-thumb { background: var(--border-bright); }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-body {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+
+  /* SHOT CARDS */
+  .shot-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .shot-card {
+    border: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+
+  .shot-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .shot-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+
+  .shot-purpose {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    flex: 1;
+    margin: 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .shot-toggle {
+    color: var(--text-dimmer);
+    font-size: 10px;
+    transition: transform 0.2s;
+  }
+  .shot-card.expanded .shot-toggle { transform: rotate(180deg); }
+
+  .shot-card-body {
+    display: none;
+    padding: 14px;
+    gap: 10px;
+    flex-direction: column;
+  }
+  .shot-card.expanded .shot-card-body { display: flex; }
+
+  .shot-field {
+    display: flex;
+    gap: 10px;
+  }
+
+  .shot-field-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 110px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  .shot-field-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .prompt-block {
+    background: var(--bg-4);
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    line-height: 1.7;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.15s;
+  }
+  .prompt-block:hover { border-color: var(--accent); }
+
+  .prompt-copy-hint {
+    position: absolute;
+    top: 4px; right: 8px;
+    font-size: 8px;
+    color: var(--text-dimmer);
+  }
+
+  /* REPLICATION RULES */
+  .rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rule-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+
+  .rule-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+  }
+
+  .rule-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  /* FEEDING OUTPUT */
+  .feeding-box {
+    background: var(--bg-3);
+    border: 1px solid var(--accent-dim);
+    padding: 16px;
+    position: relative;
+  }
+
+  .feeding-box-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .feeding-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+
+  .btn-copy-feed {
+    margin-top: 12px;
+    width: 100%;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-copy-feed:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn-copy-feed.copied {
+    background: var(--success);
+    border-color: var(--success);
+    color: var(--bg);
+  }
+
+  /* RAW TEXT */
+  .raw-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    white-space: pre-wrap;
+    background: var(--bg-2);
+    padding: 16px;
+    border: 1px solid var(--border);
+  }
+
+  /* MODAL — API KEYS */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--bg-2);
+    border: 1px solid var(--border-bright);
+    width: 440px;
+    padding: 24px;
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .modal-field {
+    margin-bottom: 14px;
+  }
+
+  .modal-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .modal-input {
+    width: 100%;
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 8px 10px;
+    outline: none;
+  }
+  .modal-input:focus { border-color: var(--accent); }
+
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .btn-modal-save {
+    flex: 1;
+    padding: 10px;
+    background: var(--accent);
+    border: none;
+    color: var(--bg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    cursor: pointer;
+  }
+
+  .btn-modal-cancel {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text-dim);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--bg-3);
+    border: 1px solid var(--border-bright);
+    border-left: 3px solid var(--accent);
+    padding: 10px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.2s;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast.error { border-left-color: var(--danger); }
+  .toast.success { border-left-color: var(--success); }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <span class="logo">CODEX</span>
+    <span class="logo-sep">/</span>
+    <span class="logo-sub">AI CREATIVE LAB</span>
+  </div>
+  <div class="header-right">
+    <div class="api-status">
+      <div class="status-dot" id="gemini-dot"></div>
+      <span id="gemini-status">GEMINI</span>
+    </div>
+    <button class="btn-header" onclick="openModal()">API KEYS</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT: ARCHIVE -->
+  <div class="panel-left">
+    <div class="panel-header">
+      <span class="panel-title">ARCHIVE</span>
+      <span class="archive-count" id="archive-count">0 ENTRIES</span>
+    </div>
+
+    <div class="genre-filter" id="genre-filter">
+      <button class="genre-tag all active" data-genre="ALL" onclick="filterGenre(this)">ALL</button>
+      <button class="genre-tag" data-genre="FASHION CAMPAIGN" onclick="filterGenre(this)">FASHION</button>
+      <button class="genre-tag" data-genre="COMMERCIAL" onclick="filterGenre(this)">COMMERCIAL</button>
+      <button class="genre-tag" data-genre="SNS SHORTFORM" onclick="filterGenre(this)">SNS</button>
+      <button class="genre-tag" data-genre="CINEMATIC FILM" onclick="filterGenre(this)">CINEMATIC</button>
+    </div>
+
+    <div class="archive-list" id="archive-list">
+      <div class="archive-empty" id="archive-empty">
+        NO ENTRIES YET<br><br>
+        UPLOAD A VIDEO<br>TO BEGIN YOUR<br>CREATIVE ARCHIVE
+      </div>
+    </div>
+
+    <button class="btn-new" onclick="showUploadView()">+ NEW ANALYSIS</button>
+  </div>
+
+  <!-- RIGHT: CONTENT -->
+  <div class="panel-right" id="panel-right">
+
+    <!-- UPLOAD VIEW -->
+    <div class="view-upload" id="view-upload">
+      <div class="upload-title">DROP A <span>REFERENCE</span><br>START EXTRACTING</div>
+
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="video-input" accept="video/*" onchange="onFileSelect(event)">
+        <div class="upload-icon">▶</div>
+        <div class="upload-label">DRAG & DROP VIDEO FILE</div>
+        <div class="upload-hint">MP4 / MOV / WEBM · Max 200MB</div>
+      </div>
+
+      <div class="file-selected-info hidden" id="file-info">
+        <span class="file-selected-name" id="file-name">—</span>
+        <span class="file-selected-size" id="file-size">—</span>
+      </div>
+
+      <div class="upload-config">
+        <div class="config-row">
+          <span class="config-label">TITLE</span>
+          <input class="config-input" id="input-title" placeholder="e.g. House of Errors — Urban Golf" />
+        </div>
+        <div class="config-row" style="align-items:flex-start">
+          <span class="config-label" style="padding-top:8px">GENRE</span>
+          <div class="genre-select-row" id="genre-select">
+            <button class="genre-select-btn" data-genre="FASHION CAMPAIGN" onclick="selectGenre(this)">FASHION CAMPAIGN</button>
+            <button class="genre-select-btn" data-genre="COMMERCIAL" onclick="selectGenre(this)">COMMERCIAL</button>
+            <button class="genre-select-btn" data-genre="SNS SHORTFORM" onclick="selectGenre(this)">SNS SHORTFORM</button>
+            <button class="genre-select-btn" data-genre="CINEMATIC FILM" onclick="selectGenre(this)">CINEMATIC FILM</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-analyze" id="btn-analyze" onclick="startAnalysis()" disabled>ANALYZE</button>
+    </div>
+
+    <!-- PROGRESS VIEW -->
+    <div class="view-progress hidden" id="view-progress">
+      <div class="progress-title">EXTRACTING PRODUCTION LANGUAGE</div>
+      <div class="progress-stage" id="progress-stage">INITIALIZING...</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+        <div class="progress-bar-scan" id="progress-scan"></div>
+      </div>
+      <div class="progress-log" id="progress-log"></div>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div class="view-result hidden" id="view-result">
+      <div class="result-header">
+        <div class="result-title-block">
+          <div class="result-video-title" id="result-title">—</div>
+          <div class="result-genre-badge" id="result-genre">—</div>
+        </div>
+        <div class="result-actions">
+          <button class="btn-action" onclick="saveCurrentResult()">SAVE TO ARCHIVE</button>
+          <button class="btn-action primary" onclick="showTab('feeding')">EXTRACT FEED</button>
+        </div>
+      </div>
+
+      <div class="result-tabs">
+        <button class="tab-btn active" onclick="showTab('logic')" id="tab-logic">DIRECTORIAL LOGIC</button>
+        <button class="tab-btn" onclick="showTab('shots')" id="tab-shots">SHOT BREAKDOWN</button>
+        <button class="tab-btn" onclick="showTab('engine')" id="tab-engine">NARRATIVE ENGINE</button>
+        <button class="tab-btn" onclick="showTab('rules')" id="tab-rules">REPLICATION RULES</button>
+        <button class="tab-btn" onclick="showTab('feeding')" id="tab-feeding">FEEDING OUTPUT</button>
+        <button class="tab-btn" onclick="showTab('raw')" id="tab-raw">RAW</button>
+      </div>
+
+      <div class="result-content" id="result-content">
+        <!-- dynamically filled -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL: API KEYS -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title">API KEYS</div>
+    <div class="modal-field">
+      <div class="modal-label">GEMINI API KEY</div>
+      <input class="modal-input" id="modal-gemini" type="password" placeholder="AIza..." />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal()">CANCEL</button>
+      <button class="btn-modal-save" onclick="saveKeys()">SAVE</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────
+let selectedFile = null;
+let selectedGenre = null;
+let currentResult = null;
+let activeArchiveId = null;
+let activeFilter = 'ALL';
+let activeTab = 'logic';
+
+const GEMINI_MODEL = 'gemini-2.0-flash';
+
+const CODEX_PROMPT = `You are a professional film director and creative director analyzing a fashion/commercial video.
+
+Your task is NOT to critique or review this video.
+Your task is to extract PRODUCTION LANGUAGE — the precise instructions a director would give to recreate this video or create a new video using the same creative sensibility.
+
+Analyze this video and output the following structure EXACTLY. Use the exact section headers shown.
+
+---
+
+## DIRECTORIAL LOGIC
+What is the single core directorial decision that makes this video work?
+Not "what happens" — but what ONE structural or perceptual choice does the director make that the audience never consciously notices but completely controls their experience?
+
+---
+
+## SHOT-BY-SHOT BREAKDOWN
+For each distinct shot, output:
+
+**SHOT [N]**
+- Camera position: [exact physical placement — ground level / eye level / overhead / etc.]
+- Lens behavior: [focal length feel — compression / expansion / macro / etc.]
+- Subject state: [what is physically happening with the subject]
+- Background control: [what is included / excluded / blurred / revealed]
+- Color & tone: [dominant color palette, contrast level, color temperature, any deliberate color treatment]
+- Rhythm & duration: [approximate cut length and tempo relationship to adjacent shots]
+- T2I PROMPT: [a single, precise prompt to recreate this exact frame as a still image]
+- I2V DIRECTION: [camera movement + subject movement + pacing instruction for this shot]
+- DIRECTORIAL PURPOSE: [in one sentence — why does THIS shot exist at THIS moment]
+
+---
+
+## NARRATIVE ENGINE
+How does this video hold the viewer from first frame to last?
+Do not assume tension-release structure — identify the actual mechanism this video uses.
+Describe it with specific technical means:
+"Shots [N–N] achieve [perceptual state] by [specific method], so that shot [N] delivers [specific effect]."
+Include how the editing rhythm (cut lengths, pacing changes) participates in this mechanism.
+
+---
+
+## REPLICATION RULES
+List exactly 3 rules someone must follow to make a different video using the SAME directorial logic.
+These must be actionable constraints, not aesthetic descriptions.
+Each rule must be specific enough that violating it would produce a noticeably different result.
+
+---
+
+Output in English. Be specific. Be technical. No generic film vocabulary without concrete application to this specific video.`;
+
+// ─── GEMINI FILE API ──────────────────────────────────────
+async function uploadToGemini(file, apiKey) {
+  logProgress('Uploading video to Gemini File API...');
+  setProgress(10);
+
+  const metadata = { file: { display_name: file.name, mime_type: file.type } };
+  const form = new FormData();
+  form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+  form.append('file', file);
+
+  const uploadRes = await fetch(
+    `https://generativelanguage.googleapis.com/upload/v1beta/files?uploadType=multipart&key=${apiKey}`,
+    { method: 'POST', body: form }
+  );
+
+  if (!uploadRes.ok) {
+    const err = await uploadRes.text();
+    throw new Error(`Upload failed: ${err}`);
+  }
+
+  const uploadData = await uploadRes.json();
+  const fileUri = uploadData.file?.uri;
+  if (!fileUri) throw new Error('No file URI returned');
+  const fileId = fileUri.split('/').pop();
+
+  logProgress(`File uploaded. ID: ${fileId}`);
+  setProgress(25);
+
+  // Poll for ACTIVE status
+  logProgress('Waiting for file processing...');
+  for (let i = 0; i < 40; i++) {
+    await sleep(5000);
+    const statusRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/files/${fileId}?key=${apiKey}`
+    );
+    const statusData = await statusRes.json();
+    const state = statusData.file?.state;
+    logProgress(`File state: ${state} (attempt ${i+1}/40)`);
+    if (state === 'ACTIVE') {
+      setProgress(45);
+      return fileUri;
+    }
+    if (state === 'FAILED') throw new Error('File processing failed');
+  }
+  throw new Error('File processing timeout');
+}
+
+async function analyzeWithGemini(fileUri, apiKey) {
+  logProgress('Sending to Gemini for analysis...');
+  setProgress(50);
+
+  const body = {
+    contents: [{
+      parts: [
+        { file_data: { mime_type: selectedFile.type, file_uri: fileUri } },
+        { text: CODEX_PROMPT }
+      ]
+    }],
+    generationConfig: { temperature: 0.4, maxOutputTokens: 8192 }
+  };
+
+  // Exponential backoff
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
+    );
+
+    if (res.status === 429 || res.status === 503) {
+      const wait = 3000 * Math.pow(2, attempt);
+      logProgress(`Gemini overloaded. Retrying in ${wait/1000}s...`);
+      await sleep(wait);
+      continue;
+    }
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Gemini error: ${err}`);
+    }
+
+    const data = await res.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) throw new Error('No response from Gemini');
+
+    setProgress(85);
+    logProgress('Analysis complete.');
+    return text;
+  }
+  throw new Error('Gemini failed after 3 attempts');
+}
+
+// ─── ANALYSIS FLOW ────────────────────────────────────────
+async function startAnalysis() {
+  const geminiKey = localStorage.getItem('gemini_key');
+  if (!geminiKey) { showToast('Gemini API key required', 'error'); openModal(); return; }
+  if (!selectedFile) { showToast('No video file selected', 'error'); return; }
+  if (!selectedGenre) { showToast('Select a genre', 'error'); return; }
+
+  showView('progress');
+
+  try {
+    const fileUri = await uploadToGemini(selectedFile, geminiKey);
+    const rawText = await analyzeWithGemini(fileUri, geminiKey);
+
+    logProgress('Parsing result...');
+    setProgress(90);
+
+    const parsed = parseResult(rawText);
+    const title = document.getElementById('input-title').value.trim() || selectedFile.name;
+    const thumb = await generateThumbnail(selectedFile);
+
+    currentResult = { title, genre: selectedGenre, parsed, raw: rawText, thumb };
+
+    setProgress(100);
+    logProgress('Done.');
+    await sleep(400);
+
+    renderResult(currentResult);
+    showView('result');
+    showTab('logic');
+
+  } catch (err) {
+    showToast(err.message, 'error');
+    showView('upload');
+    console.error(err);
+  }
+}
+
+// ─── PARSE ───────────────────────────────────────────────
+function parseResult(text) {
+  const sections = {};
+
+  const directorialMatch = text.match(/##\s*DIRECTORIAL LOGIC\s*([\s\S]*?)(?=##|$)/i);
+  sections.directorial = directorialMatch ? directorialMatch[1].trim() : '';
+
+  const shotMatch = text.match(/##\s*SHOT-BY-SHOT BREAKDOWN\s*([\s\S]*?)(?=##\s*NARRATIVE|$)/i);
+  sections.shotsRaw = shotMatch ? shotMatch[1].trim() : '';
+  sections.shots = parseShots(sections.shotsRaw);
+
+  const engineMatch = text.match(/##\s*NARRATIVE ENGINE\s*([\s\S]*?)(?=##\s*REPLICATION|$)/i);
+  sections.engine = engineMatch ? engineMatch[1].trim() : '';
+
+  const rulesMatch = text.match(/##\s*REPLICATION RULES\s*([\s\S]*?)(?=##|$)/i);
+  sections.rulesRaw = rulesMatch ? rulesMatch[1].trim() : '';
+  sections.rules = parseRules(sections.rulesRaw);
+
+  return sections;
+}
+
+function parseShots(text) {
+  const shots = [];
+  const shotBlocks = text.split(/\*\*SHOT\s+\d+\*\*/i).filter(b => b.trim());
+  const nums = [...text.matchAll(/\*\*SHOT\s+(\d+)\*\*/gi)].map(m => m[1]);
+
+  shotBlocks.forEach((block, i) => {
+    const fields = {};
+    const fieldKeys = ['Camera position','Lens behavior','Subject state','Background control',
+                       'Color & tone','Rhythm & duration','T2I PROMPT','I2V DIRECTION','DIRECTORIAL PURPOSE'];
+    fieldKeys.forEach((key, ki) => {
+      const nextKey = fieldKeys[ki+1];
+      const pattern = new RegExp(`-\\s*${key}:([\\s\\S]*?)(?=-\\s*${nextKey ? nextKey.replace('&','\\&') : '$'}|$)`, 'i');
+      const m = block.match(pattern);
+      fields[key] = m ? m[1].trim() : '';
+    });
+    shots.push({ num: nums[i] || (i+1), fields });
+  });
+  return shots;
+}
+
+function parseRules(text) {
+  const rules = [];
+  const lines = text.split('\n').filter(l => l.trim());
+  let current = '';
+  lines.forEach(line => {
+    if (/^\d+[\.\)]/.test(line.trim()) || /^\*\*Rule/.test(line.trim())) {
+      if (current) rules.push(current.trim());
+      current = line.replace(/^\d+[\.\)]\s*/, '').replace(/^\*\*Rule\s*\d+[:\s]*/i, '').trim();
+    } else {
+      current += ' ' + line.trim();
+    }
+  });
+  if (current) rules.push(current.trim());
+  return rules.slice(0, 3);
+}
+
+// ─── RENDER ──────────────────────────────────────────────
+function renderResult(result) {
+  document.getElementById('result-title').textContent = result.title;
+  document.getElementById('result-genre').textContent = result.genre;
+}
+
+function showTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const tabEl = document.getElementById(`tab-${tab}`);
+  if (tabEl) tabEl.classList.add('active');
+
+  const content = document.getElementById('result-content');
+  const p = currentResult?.parsed;
+  if (!p) return;
+
+  if (tab === 'logic') {
+    content.innerHTML = `
+      <div class="section">
+        <div class="section-label">DIRECTORIAL LOGIC</div>
+        <div class="section-body">${escHtml(p.directorial)}</div>
+      </div>`;
+  } else if (tab === 'shots') {
+    const cards = p.shots.map((shot, i) => `
+      <div class="shot-card" id="shot-card-${i}">
+        <div class="shot-card-header" onclick="toggleShot(${i})">
+          <span class="shot-num">SHOT ${shot.num}</span>
+          <span class="shot-purpose">${escHtml(shot.fields['DIRECTORIAL PURPOSE'] || '')}</span>
+          <span class="shot-toggle">▼</span>
+        </div>
+        <div class="shot-card-body">
+          ${renderShotField('CAMERA', shot.fields['Camera position'])}
+          ${renderShotField('LENS', shot.fields['Lens behavior'])}
+          ${renderShotField('SUBJECT', shot.fields['Subject state'])}
+          ${renderShotField('BACKGROUND', shot.fields['Background control'])}
+          ${renderShotField('COLOR & TONE', shot.fields['Color & tone'])}
+          ${renderShotField('RHYTHM', shot.fields['Rhythm & duration'])}
+          <div class="shot-field">
+            <span class="shot-field-key">T2I PROMPT</span>
+            <div class="shot-field-val" style="flex:1">
+              <div class="prompt-block" onclick="copyText(this, '${escAttr(shot.fields['T2I PROMPT'])}')">
+                <span class="prompt-copy-hint">CLICK TO COPY</span>
+                ${escHtml(shot.fields['T2I PROMPT'])}
+              </div>
+            </div>
+          </div>
+          <div class="shot-field">
+            <span class="shot-field-key">I2V DIRECTION</span>
+            <div class="shot-field-val" style="flex:1">
+              <div class="prompt-block" onclick="copyText(this, '${escAttr(shot.fields['I2V DIRECTION'])}')">
+                <span class="prompt-copy-hint">CLICK TO COPY</span>
+                ${escHtml(shot.fields['I2V DIRECTION'])}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`).join('');
+    content.innerHTML = `<div class="shot-grid">${cards}</div>`;
+
+  } else if (tab === 'engine') {
+    content.innerHTML = `
+      <div class="section">
+        <div class="section-label">NARRATIVE ENGINE</div>
+        <div class="section-body">${escHtml(p.engine)}</div>
+      </div>`;
+
+  } else if (tab === 'rules') {
+    const ruleItems = p.rules.map((r, i) => `
+      <div class="rule-item">
+        <span class="rule-num">${i+1}</span>
+        <span class="rule-text">${escHtml(r)}</span>
+      </div>`).join('');
+    content.innerHTML = `
+      <div class="section">
+        <div class="section-label">REPLICATION RULES</div>
+        <div class="rules-list">${ruleItems}</div>
+      </div>`;
+
+  } else if (tab === 'feeding') {
+    const feedText = buildFeedingOutput(currentResult);
+    content.innerHTML = `
+      <div class="section">
+        <div class="section-label">GROUP C FEEDING OUTPUT</div>
+        <div class="feeding-box">
+          <div class="feeding-box-label">— PASTE INTO GROUP C SYSTEM PROMPT —</div>
+          <div class="feeding-text" id="feeding-text">${escHtml(feedText)}</div>
+          <button class="btn-copy-feed" id="btn-copy-feed" onclick="copyFeedingOutput()">COPY TO CLIPBOARD</button>
+        </div>
+      </div>`;
+
+  } else if (tab === 'raw') {
+    content.innerHTML = `
+      <div class="section">
+        <div class="section-label">RAW OUTPUT</div>
+        <div class="raw-text">${escHtml(currentResult.raw)}</div>
+      </div>`;
+  }
+}
+
+function renderShotField(label, val) {
+  return `<div class="shot-field">
+    <span class="shot-field-key">${label}</span>
+    <span class="shot-field-val">${escHtml(val || '—')}</span>
+  </div>`;
+}
+
+function buildFeedingOutput(result) {
+  const p = result.parsed;
+  return `=== REFERENCE: ${result.title} ===
+GENRE: ${result.genre}
+
+--- NARRATIVE ENGINE ---
+${p.engine}
+
+--- REPLICATION RULES ---
+${p.rules.map((r, i) => `${i+1}. ${r}`).join('\n')}
+`;
+}
+
+function toggleShot(i) {
+  const card = document.getElementById(`shot-card-${i}`);
+  card.classList.toggle('expanded');
+}
+
+// ─── ARCHIVE ─────────────────────────────────────────────
+function saveCurrentResult() {
+  if (!currentResult) return;
+  const archives = getArchives();
+  const id = Date.now().toString();
+  archives[id] = {
+    id,
+    title: currentResult.title,
+    genre: currentResult.genre,
+    thumb: currentResult.thumb,
+    parsed: currentResult.parsed,
+    raw: currentResult.raw,
+    date: new Date().toISOString().slice(0,10)
+  };
+  localStorage.setItem('codex_archives', JSON.stringify(archives));
+  activeArchiveId = id;
+  renderArchiveList();
+  showToast('Saved to archive', 'success');
+}
+
+function getArchives() {
+  try { return JSON.parse(localStorage.getItem('codex_archives') || '{}'); }
+  catch { return {}; }
+}
+
+function renderArchiveList() {
+  const archives = getArchives();
+  const entries = Object.values(archives).filter(e => activeFilter === 'ALL' || e.genre === activeFilter);
+  const list = document.getElementById('archive-list');
+  const empty = document.getElementById('archive-empty');
+  const count = document.getElementById('archive-count');
+
+  const all = Object.values(archives);
+  count.textContent = `${all.length} ENTR${all.length === 1 ? 'Y' : 'IES'}`;
+
+  if (entries.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.classList.remove('hidden');
+    return;
+  }
+
+  empty.classList.add('hidden');
+  list.innerHTML = entries.sort((a,b) => b.id - a.id).map(e => `
+    <div class="archive-item ${e.id === activeArchiveId ? 'active' : ''}" onclick="loadArchiveEntry('${e.id}')">
+      ${e.thumb
+        ? `<img class="archive-thumb" src="${e.thumb}" alt="">`
+        : `<div class="archive-thumb-placeholder">▶</div>`}
+      <div class="archive-info">
+        <div class="archive-name">${escHtml(e.title)}</div>
+        <div class="archive-meta">
+          <span class="archive-genre">${escHtml(e.genre)}</span>
+          <span class="archive-date">${e.date}</span>
+        </div>
+      </div>
+      <button class="archive-delete" onclick="deleteEntry(event,'${e.id}')">✕</button>
+    </div>`).join('');
+}
+
+function loadArchiveEntry(id) {
+  const archives = getArchives();
+  const entry = archives[id];
+  if (!entry) return;
+  activeArchiveId = id;
+  currentResult = entry;
+  renderResult(entry);
+  showView('result');
+  showTab('logic');
+  renderArchiveList();
+}
+
+function deleteEntry(e, id) {
+  e.stopPropagation();
+  const archives = getArchives();
+  delete archives[id];
+  localStorage.setItem('codex_archives', JSON.stringify(archives));
+  if (activeArchiveId === id) {
+    activeArchiveId = null;
+    currentResult = null;
+    showView('upload');
+  }
+  renderArchiveList();
+  showToast('Entry deleted');
+}
+
+function filterGenre(btn) {
+  document.querySelectorAll('.genre-tag').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = btn.dataset.genre;
+  renderArchiveList();
+}
+
+// ─── THUMBNAIL ───────────────────────────────────────────
+async function generateThumbnail(file) {
+  return new Promise(resolve => {
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.src = URL.createObjectURL(file);
+    video.currentTime = 1;
+    video.onloadeddata = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 100; canvas.height = 60;
+      canvas.getContext('2d').drawImage(video, 0, 0, 100, 60);
+      URL.revokeObjectURL(video.src);
+      resolve(canvas.toDataURL('image/jpeg', 0.6));
+    };
+    video.onerror = () => resolve(null);
+  });
+}
+
+// ─── UI HELPERS ──────────────────────────────────────────
+function showView(name) {
+  ['upload','progress','result'].forEach(v => {
+    document.getElementById(`view-${v}`).classList.toggle('hidden', v !== name);
+  });
+}
+
+function showUploadView() {
+  currentResult = null;
+  activeArchiveId = null;
+  selectedFile = null;
+  selectedGenre = null;
+  document.getElementById('video-input').value = '';
+  document.getElementById('file-info').classList.add('hidden');
+  document.getElementById('input-title').value = '';
+  document.querySelectorAll('.genre-select-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('btn-analyze').disabled = true;
+  showView('upload');
+  renderArchiveList();
+}
+
+function onFileSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  selectedFile = file;
+  document.getElementById('file-info').classList.remove('hidden');
+  document.getElementById('file-name').textContent = file.name;
+  document.getElementById('file-size').textContent = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+  checkAnalyzeReady();
+}
+
+function selectGenre(btn) {
+  document.querySelectorAll('.genre-select-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedGenre = btn.dataset.genre;
+  checkAnalyzeReady();
+}
+
+function checkAnalyzeReady() {
+  document.getElementById('btn-analyze').disabled = !(selectedFile && selectedGenre);
+}
+
+function setProgress(pct) {
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+function logProgress(msg) {
+  const log = document.getElementById('progress-log');
+  const line = document.createElement('div');
+  line.textContent = `> ${msg}`;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+  document.getElementById('progress-stage').textContent = msg;
+}
+
+function copyText(el, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    el.style.borderColor = 'var(--success)';
+    setTimeout(() => el.style.borderColor = '', 1000);
+    showToast('Copied', 'success');
+  });
+}
+
+function copyFeedingOutput() {
+  const text = document.getElementById('feeding-text')?.textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('btn-copy-feed');
+    btn.textContent = 'COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY TO CLIPBOARD'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(str) {
+  return String(str || '').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+}
+
+// ─── API KEY MODAL ────────────────────────────────────────
+function openModal() {
+  document.getElementById('modal-gemini').value = localStorage.getItem('gemini_key') || '';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function saveKeys() {
+  const gemini = document.getElementById('modal-gemini').value.trim();
+  if (gemini) localStorage.setItem('gemini_key', gemini);
+  closeModal();
+  updateApiStatus();
+  showToast('API key saved', 'success');
+}
+
+function updateApiStatus() {
+  const dot = document.getElementById('gemini-dot');
+  const lbl = document.getElementById('gemini-status');
+  const key = localStorage.getItem('gemini_key');
+  if (key) { dot.classList.add('ok'); lbl.textContent = 'GEMINI'; }
+  else { dot.classList.remove('ok'); lbl.textContent = 'GEMINI'; }
+}
+
+// ─── DRAG & DROP ─────────────────────────────────────────
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+zone.addEventListener('drop', e => {
+  e.preventDefault();
+  zone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('video/')) {
+    selectedFile = file;
+    document.getElementById('file-info').classList.remove('hidden');
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('file-size').textContent = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+    checkAnalyzeReady();
+  }
+});
+
+// ─── INIT ─────────────────────────────────────────────────
+updateApiStatus();
+renderArchiveList();
+</script>
+</body>
+</html>
