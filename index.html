@@ -1206,8 +1206,8 @@ async function uploadToGemini(file, apiKey) {
   );
 
   if (!uploadRes.ok) {
-    const err = await uploadRes.text();
-    throw new Error(`Upload failed: ${err}`);
+    const err = await uploadRes.json().catch(() => ({}));
+    throw new Error(`Upload failed: ${err.error?.message || uploadRes.status}`);
   }
 
   const uploadData = await uploadRes.json();
@@ -1218,29 +1218,23 @@ async function uploadToGemini(file, apiKey) {
   logProgress(`File uploaded. ID: ${fileId}`);
   setProgress(25);
 
-  // Poll for ACTIVE status
-  // First 20 attempts: 3s interval, next 40 attempts: 5s interval = max ~260s
+  // Poll for ACTIVE status — 40 attempts × 5s = max 200s
   logProgress('Waiting for file processing...');
-  const pollSchedule = [
-    ...Array(20).fill(3000),
-    ...Array(40).fill(5000)
-  ];
-  for (let i = 0; i < pollSchedule.length; i++) {
-    await sleep(pollSchedule[i]);
+  for (let i = 0; i < 40; i++) {
     const statusRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/files/${fileId}?key=${apiKey}`
     );
     const statusData = await statusRes.json();
     const state = statusData?.state || statusData?.file?.state;
-    const elapsed = pollSchedule.slice(0, i+1).reduce((a,b) => a+b, 0) / 1000;
-    logProgress(`File state: ${state} (${Math.round(elapsed)}s elapsed)`);
+    logProgress(`File processing... (${i + 1}/40, state: ${state || 'PROCESSING'})`);
     if (state === 'ACTIVE') {
       setProgress(45);
       return fileUri;
     }
     if (state === 'FAILED') throw new Error('File processing failed on Gemini side');
+    if (i === 39) throw new Error('File processing timeout — try again');
+    await sleep(5000);
   }
-  throw new Error('File processing timeout — try a smaller file or re-upload');
 }
 
 async function analyzeWithGemini(fileUri, apiKey) {
@@ -1248,43 +1242,50 @@ async function analyzeWithGemini(fileUri, apiKey) {
   setProgress(50);
 
   const body = {
-    contents: [{
-      parts: [
-        { file_data: { mime_type: selectedFile.type, file_uri: fileUri } },
-        { text: CODEX_PROMPT }
-      ]
-    }],
-    generationConfig: { temperature: 0.4, maxOutputTokens: 8192 }
+    contents: [{ parts: [
+      { file_data: { mime_type: selectedFile.type || 'video/mp4', file_uri: fileUri } },
+      { text: CODEX_PROMPT }
+    ]}],
+    generationConfig: { maxOutputTokens: 8192, temperature: 0.4 }
   };
 
-  // Exponential backoff
-  for (let attempt = 0; attempt < 3; attempt++) {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
-      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
-    );
+  const retryDelays = [5000, 10000, 20000, 30000, 40000];
+  const maxAttempts = 5;
+  let lastError = null;
 
-    if (res.status === 429 || res.status === 503) {
-      const wait = 3000 * Math.pow(2, attempt);
-      logProgress(`Gemini overloaded. Retrying in ${wait/1000}s...`);
-      await sleep(wait);
-      continue;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    try {
+      if (attempt > 0) {
+        const waitSec = retryDelays[attempt - 1] / 1000;
+        for (let i = waitSec; i > 0; i--) {
+          logProgress(`Gemini overloaded — retry ${attempt + 1} in ${i}s...`);
+          await sleep(1000);
+        }
+      }
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
+        { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
+      );
+      if (res.status === 429 || res.status === 503 || res.status === 500) {
+        const errData = await res.json().catch(() => ({}));
+        lastError = `Gemini API error (${res.status}): ${errData.error?.message || 'server busy'}`;
+        if (attempt < maxAttempts - 1) continue;
+        throw new Error(lastError);
+      }
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(`Gemini API error: ${err.error?.message || res.status}`);
+      }
+      const data = await res.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) throw new Error('No response from Gemini');
+      setProgress(85);
+      logProgress('Analysis complete.');
+      return text;
+    } catch (e) {
+      if (attempt === maxAttempts - 1) throw new Error(`Gemini failed (${maxAttempts} attempts): ${lastError || e.message}`);
     }
-
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(`Gemini error: ${err}`);
-    }
-
-    const data = await res.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) throw new Error('No response from Gemini');
-
-    setProgress(85);
-    logProgress('Analysis complete.');
-    return text;
   }
-  throw new Error('Gemini failed after 3 attempts');
 }
 
 // ─── ANALYSIS FLOW ────────────────────────────────────────
