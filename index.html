@@ -1219,22 +1219,28 @@ async function uploadToGemini(file, apiKey) {
   setProgress(25);
 
   // Poll for ACTIVE status
+  // First 20 attempts: 3s interval, next 40 attempts: 5s interval = max ~260s
   logProgress('Waiting for file processing...');
-  for (let i = 0; i < 40; i++) {
-    await sleep(5000);
+  const pollSchedule = [
+    ...Array(20).fill(3000),
+    ...Array(40).fill(5000)
+  ];
+  for (let i = 0; i < pollSchedule.length; i++) {
+    await sleep(pollSchedule[i]);
     const statusRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/files/${fileId}?key=${apiKey}`
     );
     const statusData = await statusRes.json();
     const state = statusData.file?.state;
-    logProgress(`File state: ${state} (attempt ${i+1}/40)`);
+    const elapsed = pollSchedule.slice(0, i+1).reduce((a,b) => a+b, 0) / 1000;
+    logProgress(`File state: ${state} (${Math.round(elapsed)}s elapsed)`);
     if (state === 'ACTIVE') {
       setProgress(45);
       return fileUri;
     }
-    if (state === 'FAILED') throw new Error('File processing failed');
+    if (state === 'FAILED') throw new Error('File processing failed on Gemini side');
   }
-  throw new Error('File processing timeout');
+  throw new Error('File processing timeout — try a smaller file or re-upload');
 }
 
 async function analyzeWithGemini(fileUri, apiKey) {
