@@ -1195,12 +1195,10 @@ async function uploadToGemini(file, apiKey) {
   logProgress('Uploading video to Gemini File API...');
   setProgress(10);
 
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const metadata = { file: { display_name: safeName, mime_type: file.type } };
+  const metadata = JSON.stringify({ file: { display_name: file.name } });
   const form = new FormData();
-  form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-  const safeFile = new File([file], safeName, { type: file.type });
-  form.append("file", safeFile);
+  form.append('metadata', new Blob([metadata], { type: 'application/json' }));
+  form.append('file', file, file.name);
 
   const uploadRes = await fetch(
     `https://generativelanguage.googleapis.com/upload/v1beta/files?uploadType=multipart&key=${apiKey}`,
