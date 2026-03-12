@@ -1402,7 +1402,7 @@ function showTab(tab) {
     content.innerHTML = `
       <div class="section">
         <div class="section-label">DIRECTORIAL LOGIC</div>
-        <div class="section-body">${escHtml(p.directorial)}</div>
+        <div class="section-body">${renderMd(p.directorial)}</div>
       </div>`;
   } else if (tab === 'shots') {
     const cards = p.shots.map((shot, i) => `
@@ -1445,14 +1445,14 @@ function showTab(tab) {
     content.innerHTML = `
       <div class="section">
         <div class="section-label">NARRATIVE ENGINE</div>
-        <div class="section-body">${escHtml(p.engine)}</div>
+        <div class="section-body">${renderMd(p.engine)}</div>
       </div>`;
 
   } else if (tab === 'rules') {
     const ruleItems = p.rules.map((r, i) => `
       <div class="rule-item">
         <span class="rule-num">${i+1}</span>
-        <span class="rule-text">${escHtml(r)}</span>
+        <span class="rule-text">${renderMd(r)}</span>
       </div>`).join('');
     content.innerHTML = `
       <div class="section">
@@ -1467,7 +1467,7 @@ function showTab(tab) {
         <div class="section-label">GROUP C FEEDING OUTPUT</div>
         <div class="feeding-box">
           <div class="feeding-box-label">— PASTE INTO GROUP C SYSTEM PROMPT —</div>
-          <div class="feeding-text" id="feeding-text">${escHtml(feedText)}</div>
+          <div class="feeding-text" id="feeding-text">${renderMd(feedText)}</div>
           <button class="btn-copy-feed" id="btn-copy-feed" onclick="copyFeedingOutput()">COPY TO CLIPBOARD</button>
         </div>
       </div>`;
@@ -1701,6 +1701,13 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function escHtml(str) {
   return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderMd(str) {
+  // Convert **text** to <strong>text</strong>, then escape remaining html
+  return String(str || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--text)">$1</strong>');
 }
 function escAttr(str) {
   return String(str || '').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
