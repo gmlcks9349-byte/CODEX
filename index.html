@@ -1145,16 +1145,20 @@ function buildFeedingOutput(result) {
   const n = p.narrative || {};
   const isOt = result.isOnetake;
 
-  // Visual pattern from shots
-  let visualPattern = '';
+  // Lighting pattern: first non-empty lighting field from shots
+  let lightingPattern = '—';
   if (!isOt && p.shots && p.shots.length > 0) {
-    const compositions = p.shots.map(sh => sh.fields['COMPOSITION']).filter(Boolean);
-    const lighting = p.shots.map(sh => sh.fields['LIGHTING']).filter(Boolean);
-    if (compositions.length > 0) visualPattern += `DOMINANT COMPOSITIONS: ${[...new Set(compositions)].slice(0,4).join(' / ')}\n`;
-    if (lighting.length > 0) visualPattern += `LIGHTING PATTERN: ${lighting[0]}`;
+    const firstLighting = p.shots.map(sh => sh.fields['LIGHTING']).find(v => v && v.trim());
+    if (firstLighting) lightingPattern = firstLighting;
   } else if (isOt && p.onetake) {
-    visualPattern = `ONE-TAKE — Duration: ${p.onetake.duration || '—'}`;
+    lightingPattern = `ONE-TAKE — Duration: ${p.onetake.duration || '—'}`;
   }
+
+  const visualMotif = n['VISUAL MOTIF'] || '—';
+  const productPattern = n['PRODUCT INTEGRATION PATTERN'] || s['PRODUCT EXPOSURE STRATEGY'] || '—';
+  const climaxOrLogic = !isOt
+    ? `CLIMAX: ${n['CLIMAX POINT'] || '—'}`
+    : `SINGLE-TAKE LOGIC: ${n['SINGLE-TAKE LOGIC'] || '—'}`;
 
   return `=== REFERENCE: ${result.title} ===
 GENRE: ${result.genre}${isOt ? ' · ONE-TAKE' : ''}
@@ -1162,16 +1166,17 @@ GENRE: ${result.genre}${isOt ? ' · ONE-TAKE' : ''}
 --- STRATEGIC INTENT ---
 POSITIONING: ${s['BRAND POSITIONING'] || '—'}
 CORE MESSAGE: ${s['CORE MESSAGE'] || '—'}
-PRODUCT STRATEGY: ${s['PRODUCT EXPOSURE STRATEGY'] || '—'}
 VISUAL WORLD: ${s['VISUAL WORLD'] || '—'}
 
 --- NARRATIVE ---
 STRUCTURE: ${s['NARRATIVE STRUCTURE'] || '—'}
-EMOTIONAL CURVE: ${n['EMOTIONAL CURVE'] || n['EMOTIONAL CURVE'] || '—'}
-${!isOt ? `CLIMAX: ${n['CLIMAX POINT'] || '—'}` : `SINGLE-TAKE LOGIC: ${n['SINGLE-TAKE LOGIC'] || '—'}`}
+EMOTIONAL CURVE: ${n['EMOTIONAL CURVE'] || '—'}
+${climaxOrLogic}
 
 --- VISUAL LANGUAGE ---
-${visualPattern || n['VISUAL MOTIF'] || '—'}
+VISUAL MOTIF: ${visualMotif}
+PRODUCT PATTERN: ${productPattern}
+LIGHTING: ${lightingPattern}
 `;
 }
 
