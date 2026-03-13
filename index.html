@@ -46,944 +46,350 @@
     background: var(--bg);
     flex-shrink: 0;
   }
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 3px;
-    color: var(--accent);
-  }
-
-  .logo-sep {
-    color: var(--border-bright);
-    font-size: 16px;
-  }
-
-  .logo-sub {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .api-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    color: var(--text-dim);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--text-dimmer);
-  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--accent); }
+  .logo-sep { color: var(--border-bright); font-size: 16px; }
+  .logo-sub { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; color: var(--text-dim); }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .api-status { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dimmer); }
   .status-dot.ok { background: var(--success); }
   .status-dot.err { background: var(--danger); }
-
   .btn-header {
-    background: transparent;
-    border: 1px solid var(--border-bright);
-    color: var(--text-dim);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    padding: 5px 12px;
-    cursor: pointer;
-    letter-spacing: 1px;
-    transition: all 0.15s;
+    background: transparent; border: 1px solid var(--border-bright); color: var(--text-dim);
+    font-family: 'Space Mono', monospace; font-size: 10px; padding: 5px 12px;
+    cursor: pointer; letter-spacing: 1px; transition: all 0.15s;
   }
-  .btn-header:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+  .btn-header:hover { border-color: var(--accent); color: var(--accent); }
 
   /* MAIN LAYOUT */
-  .main {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-  }
+  .main { display: flex; flex: 1; overflow: hidden; }
 
-  /* LEFT PANEL — ARCHIVE */
+  /* LEFT PANEL */
   .panel-left {
-    width: 280px;
-    flex-shrink: 0;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    background: var(--bg);
+    width: 280px; flex-shrink: 0; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; background: var(--bg);
   }
-
   .panel-header {
-    padding: 14px 16px 10px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
+    padding: 14px 16px 10px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
   }
+  .panel-title { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--text-dim); }
+  .archive-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); }
 
-  .panel-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-  }
-
-  .archive-count {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-  }
-
-  /* GENRE FILTER */
   .genre-filter {
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    flex-shrink: 0;
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 6px; flex-shrink: 0;
   }
-
   .genre-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.5px;
-    padding: 3px 8px;
-    border: 1px solid var(--border-bright);
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: all 0.15s;
-    background: transparent;
-    text-transform: uppercase;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.5px;
+    padding: 3px 8px; border: 1px solid var(--border-bright); color: var(--text-dim);
+    cursor: pointer; transition: all 0.15s; background: transparent; text-transform: uppercase;
   }
-  .genre-tag:hover, .genre-tag.active {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(232, 160, 32, 0.06);
-  }
-  .genre-tag.all.active {
-    background: var(--accent);
-    color: var(--bg);
-  }
+  .genre-tag:hover, .genre-tag.active { border-color: var(--accent); color: var(--accent); background: rgba(232,160,32,0.06); }
+  .genre-tag.all.active { background: var(--accent); color: var(--bg); }
 
-  /* ARCHIVE LIST */
-  .archive-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 8px 0;
-  }
-
+  .archive-list { flex: 1; overflow-y: auto; padding: 8px 0; }
   .archive-list::-webkit-scrollbar { width: 3px; }
-  .archive-list::-webkit-scrollbar-track { background: transparent; }
   .archive-list::-webkit-scrollbar-thumb { background: var(--border-bright); }
 
   .archive-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.1s;
-    position: relative;
+    display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+    cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.1s; position: relative;
   }
   .archive-item:hover { background: var(--bg-2); }
-  .archive-item.active {
-    background: var(--bg-3);
-    border-left: 2px solid var(--accent);
-    padding-left: 14px;
-  }
+  .archive-item.active { background: var(--bg-3); border-left: 2px solid var(--accent); padding-left: 14px; }
 
-  .archive-thumb {
-    width: 52px;
-    height: 32px;
-    object-fit: cover;
-    background: var(--bg-4);
-    flex-shrink: 0;
-    border: 1px solid var(--border);
-  }
-
+  .archive-thumb { width: 52px; height: 32px; object-fit: cover; background: var(--bg-4); flex-shrink: 0; border: 1px solid var(--border); }
   .archive-thumb-placeholder {
-    width: 52px;
-    height: 32px;
-    background: var(--bg-4);
-    flex-shrink: 0;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-dimmer);
-    font-size: 14px;
+    width: 52px; height: 32px; background: var(--bg-4); flex-shrink: 0; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; color: var(--text-dimmer); font-size: 14px;
   }
-
   .archive-info { flex: 1; min-width: 0; }
+  .archive-name { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+  .archive-meta { display: flex; align-items: center; gap: 6px; }
+  .archive-genre { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--accent-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+  .archive-date { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-dimmer); }
+  .archive-onetake { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--success); letter-spacing: 0.5px; }
 
-  .archive-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 3px;
+  .archive-actions {
+    display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;
+    opacity: 0; transition: opacity 0.15s;
   }
-
-  .archive-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  .archive-item:hover .archive-actions { opacity: 1; }
+  .archive-btn-feed {
+    background: var(--accent); border: none; color: var(--bg);
+    font-family: 'DM Mono', monospace; font-size: 7px; letter-spacing: 0.5px;
+    padding: 2px 5px; cursor: pointer; white-space: nowrap;
   }
+  .archive-delete { background: transparent; border: none; color: var(--danger); cursor: pointer; font-size: 11px; padding: 2px 4px; }
 
-  .archive-genre {
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    color: var(--accent-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+  .archive-empty { padding: 40px 16px; text-align: center; color: var(--text-dimmer); font-family: 'DM Mono', monospace; font-size: 10px; line-height: 1.8; }
 
-  .archive-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 8px;
-    color: var(--text-dimmer);
-  }
-
-  .archive-delete {
-    opacity: 0;
-    background: transparent;
-    border: none;
-    color: var(--danger);
-    cursor: pointer;
-    font-size: 12px;
-    padding: 2px 4px;
-    transition: opacity 0.15s;
-    flex-shrink: 0;
-  }
-  .archive-item:hover .archive-delete { opacity: 1; }
-
-  .archive-empty {
-    padding: 40px 16px;
-    text-align: center;
-    color: var(--text-dimmer);
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    line-height: 1.8;
-  }
-
-  /* NEW ANALYSIS BUTTON */
   .btn-new {
-    margin: 12px 16px;
-    padding: 10px;
-    background: transparent;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 14px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.15s;
-    flex-shrink: 0;
+    margin: 12px 16px; padding: 10px; background: transparent;
+    border: 1px solid var(--accent); color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 2px;
+    cursor: pointer; transition: all 0.15s; flex-shrink: 0;
   }
-  .btn-new:hover {
-    background: var(--accent);
-    color: var(--bg);
-  }
+  .btn-new:hover { background: var(--accent); color: var(--bg); }
 
   /* RIGHT PANEL */
-  .panel-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: var(--bg);
-  }
+  .panel-right { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
 
   /* UPLOAD VIEW */
   .view-upload {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    padding: 40px;
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 24px; padding: 40px; overflow-y: auto;
   }
-
-  .upload-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    letter-spacing: 4px;
-    color: var(--text-dim);
-    text-align: center;
-  }
-
+  .upload-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 4px; color: var(--text-dim); text-align: center; }
   .upload-title span { color: var(--accent); }
-
   .upload-zone {
-    width: 100%;
-    max-width: 560px;
-    border: 1px dashed var(--border-bright);
-    padding: 40px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
+    width: 100%; max-width: 560px; border: 1px dashed var(--border-bright);
+    padding: 40px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
   }
-  .upload-zone:hover, .upload-zone.drag-over {
-    border-color: var(--accent);
-    background: rgba(232, 160, 32, 0.04);
-  }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: rgba(232,160,32,0.04); }
+  .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-icon { font-size: 32px; margin-bottom: 12px; color: var(--text-dimmer); }
+  .upload-label { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 6px; }
+  .upload-hint { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dimmer); }
 
-  .upload-zone input {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-  }
-
-  .upload-icon {
-    font-size: 32px;
-    margin-bottom: 12px;
-    color: var(--text-dimmer);
-  }
-
-  .upload-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    margin-bottom: 6px;
-  }
-
-  .upload-hint {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dimmer);
-  }
-
-  .upload-config {
-    width: 100%;
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .config-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
+  .upload-config { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 12px; }
+  .config-row { display: flex; align-items: center; gap: 12px; }
   .config-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dim);
-    width: 80px;
-    flex-shrink: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim);
+    width: 80px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px;
   }
-
   .config-input {
-    flex: 1;
-    background: var(--bg-3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 8px 10px;
-    outline: none;
-    transition: border-color 0.15s;
+    flex: 1; background: var(--bg-3); border: 1px solid var(--border); color: var(--text);
+    font-family: 'DM Mono', monospace; font-size: 11px; padding: 8px 10px; outline: none; transition: border-color 0.15s;
   }
   .config-input:focus { border-color: var(--accent); }
 
-  .genre-select-row {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
+  .genre-select-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .genre-select-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.5px;
-    padding: 5px 10px;
-    border: 1px solid var(--border-bright);
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: all 0.15s;
-    background: transparent;
-    text-transform: uppercase;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.5px;
+    padding: 5px 10px; border: 1px solid var(--border-bright); color: var(--text-dim);
+    cursor: pointer; transition: all 0.15s; background: transparent; text-transform: uppercase;
   }
-  .genre-select-btn.selected {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(232, 160, 32, 0.08);
+  .genre-select-btn.selected { border-color: var(--accent); color: var(--accent); background: rgba(232,160,32,0.08); }
+
+  /* ONE-TAKE TOGGLE */
+  .onetake-row { display: flex; align-items: center; gap: 12px; }
+  .onetake-label-text { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+  .onetake-badge {
+    font-family: 'DM Mono', monospace; font-size: 8px; color: var(--text-dimmer);
+    border: 1px solid var(--border); padding: 2px 6px; letter-spacing: 0.5px;
   }
+  .toggle-wrap { display: flex; align-items: center; gap: 8px; }
+  .toggle-switch {
+    position: relative; width: 36px; height: 18px; cursor: pointer;
+    background: var(--bg-4); border: 1px solid var(--border-bright);
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .toggle-switch.on { background: var(--accent); border-color: var(--accent); }
+  .toggle-knob {
+    position: absolute; top: 2px; left: 2px;
+    width: 12px; height: 12px; background: var(--text-dimmer); transition: all 0.2s;
+  }
+  .toggle-switch.on .toggle-knob { left: 20px; background: var(--bg); }
+  .toggle-state { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dimmer); letter-spacing: 0.5px; }
+  .toggle-switch.on + .toggle-state { color: var(--accent); }
 
   .file-selected-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: var(--bg-3);
-    border: 1px solid var(--border);
-    width: 100%;
-    max-width: 560px;
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    background: var(--bg-3); border: 1px solid var(--border); width: 100%; max-width: 560px;
   }
-
-  .file-selected-name {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .file-selected-size {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dimmer);
-    flex-shrink: 0;
-  }
+  .file-selected-name { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-selected-size { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dimmer); flex-shrink: 0; }
 
   .btn-analyze {
-    width: 100%;
-    max-width: 560px;
-    padding: 14px;
-    background: var(--accent);
-    border: none;
-    color: var(--bg);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 3px;
-    cursor: pointer;
-    transition: all 0.15s;
+    width: 100%; max-width: 560px; padding: 14px; background: var(--accent);
+    border: none; color: var(--bg); font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 3px; cursor: pointer; transition: all 0.15s;
   }
   .btn-analyze:hover { background: #f0b030; }
-  .btn-analyze:disabled {
-    background: var(--bg-4);
-    color: var(--text-dimmer);
-    cursor: not-allowed;
-  }
+  .btn-analyze:disabled { background: var(--bg-4); color: var(--text-dimmer); cursor: not-allowed; }
 
   /* PROGRESS VIEW */
   .view-progress {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 20px; padding: 40px;
   }
-
-  .progress-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
-    letter-spacing: 3px;
-    color: var(--text-dim);
-  }
-
-  .progress-stage {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    min-height: 16px;
-  }
-
-  .progress-bar-wrap {
-    width: 360px;
-    height: 2px;
-    background: var(--bg-4);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .progress-bar-fill {
-    height: 100%;
-    background: var(--accent);
-    transition: width 0.4s ease;
-    width: 0%;
-  }
-
+  .progress-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 3px; color: var(--text-dim); }
+  .progress-stage { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); min-height: 16px; }
+  .progress-bar-wrap { width: 360px; height: 2px; background: var(--bg-4); position: relative; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); transition: width 0.4s ease; width: 0%; }
   .progress-bar-scan {
-    position: absolute;
-    top: 0; left: -40%;
-    width: 40%;
-    height: 100%;
+    position: absolute; top: 0; left: -40%; width: 40%; height: 100%;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
     animation: scan 1.5s infinite;
   }
-
-  @keyframes scan {
-    from { left: -40%; }
-    to { left: 140%; }
-  }
-
-  .progress-log {
-    width: 360px;
-    max-height: 120px;
-    overflow-y: auto;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--text-dimmer);
-    line-height: 1.8;
-  }
+  @keyframes scan { from { left: -40%; } to { left: 140%; } }
+  .progress-log { width: 360px; max-height: 120px; overflow-y: auto; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dimmer); line-height: 1.8; }
   .progress-log::-webkit-scrollbar { width: 2px; }
   .progress-log::-webkit-scrollbar-thumb { background: var(--border); }
 
   /* RESULT VIEW */
-  .view-result {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
+  .view-result { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   .result-header {
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-    background: var(--bg-2);
+    padding: 14px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0; background: var(--bg-2);
   }
-
   .result-title-block { flex: 1; min-width: 0; }
-
   .result-video-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 2px;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px;
+    color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-
+  .result-badges { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
   .result-genre-badge {
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--accent);
-    border: 1px solid var(--accent-dim);
-    padding: 2px 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 4px;
+    display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px;
+    color: var(--accent); border: 1px solid var(--accent-dim); padding: 2px 8px;
+    text-transform: uppercase; letter-spacing: 1px;
   }
-
-  .result-actions {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-    margin-left: 16px;
+  .result-onetake-badge {
+    display: none; font-family: 'DM Mono', monospace; font-size: 9px;
+    color: var(--success); border: 1px solid var(--success); padding: 2px 8px;
+    text-transform: uppercase; letter-spacing: 1px;
   }
+  .result-onetake-badge.show { display: inline-block; }
 
+  .result-actions { display: flex; gap: 8px; flex-shrink: 0; margin-left: 16px; }
   .btn-action {
-    background: transparent;
-    border: 1px solid var(--border-bright);
-    color: var(--text-dim);
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    padding: 6px 12px;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: all 0.15s;
-    text-transform: uppercase;
+    background: transparent; border: 1px solid var(--border-bright); color: var(--text-dim);
+    font-family: 'Space Mono', monospace; font-size: 9px; padding: 6px 12px;
+    cursor: pointer; letter-spacing: 0.5px; transition: all 0.15s; text-transform: uppercase;
   }
-  .btn-action:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .btn-action.primary {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .btn-action.primary:hover {
-    background: var(--accent);
-    color: var(--bg);
-  }
+  .btn-action:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-action.primary { border-color: var(--accent); color: var(--accent); }
+  .btn-action.primary:hover { background: var(--accent); color: var(--bg); }
 
   /* TABS */
-  .result-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    background: var(--bg);
-  }
-
+  .result-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--bg); }
   .tab-btn {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    padding: 10px 20px;
-    background: transparent;
-    border: none;
-    color: var(--text-dimmer);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
+    font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 1.5px;
+    padding: 10px 20px; background: transparent; border: none; color: var(--text-dimmer);
+    cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s;
   }
   .tab-btn:hover { color: var(--text-dim); }
-  .tab-btn.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
   /* RESULT CONTENT */
-  .result-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-  }
+  .result-content { flex: 1; overflow-y: auto; padding: 20px; }
   .result-content::-webkit-scrollbar { width: 3px; }
   .result-content::-webkit-scrollbar-thumb { background: var(--border-bright); }
 
   /* SECTIONS */
-  .section {
-    margin-bottom: 28px;
-  }
-
+  .section { margin-bottom: 28px; }
   .section-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
+    font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 2px;
+    color: var(--accent); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
   }
+  .section-body { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text); line-height: 1.8; white-space: pre-wrap; }
 
-  .section-body {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text);
-    line-height: 1.8;
-    white-space: pre-wrap;
-  }
+  /* STRATEGY CARDS */
+  .strategy-grid { display: flex; flex-direction: column; gap: 10px; }
+  .strategy-card { background: var(--bg-2); border: 1px solid var(--border); padding: 14px 16px; }
+  .strategy-card-label { font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--accent); margin-bottom: 6px; }
+  .strategy-card-body { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text); line-height: 1.8; }
 
   /* SHOT CARDS */
-  .shot-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .shot-card {
-    border: 1px solid var(--border);
-    background: var(--bg-2);
-  }
-
+  .shot-grid { display: flex; flex-direction: column; gap: 12px; }
+  .shot-card { border: 1px solid var(--border); background: var(--bg-2); }
   .shot-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 14px;
-    background: var(--bg-3);
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px; background: var(--bg-3); border-bottom: 1px solid var(--border); cursor: pointer;
   }
-
-  .shot-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 14px;
-    letter-spacing: 2px;
-    color: var(--accent);
+  .shot-num { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 2px; color: var(--accent); }
+  .shot-summary {
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim);
+    flex: 1; margin: 0 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-
-  .shot-purpose {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--text-dim);
-    flex: 1;
-    margin: 0 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .shot-toggle {
-    color: var(--text-dimmer);
-    font-size: 10px;
-    transition: transform 0.2s;
-  }
+  .shot-toggle { color: var(--text-dimmer); font-size: 10px; transition: transform 0.2s; }
   .shot-card.expanded .shot-toggle { transform: rotate(180deg); }
-
-  .shot-card-body {
-    display: none;
-    padding: 14px;
-    gap: 10px;
-    flex-direction: column;
-  }
+  .shot-card-body { display: none; padding: 14px; gap: 10px; flex-direction: column; }
   .shot-card.expanded .shot-card-body { display: flex; }
 
-  .shot-field {
-    display: flex;
-    gap: 10px;
-  }
-
+  .shot-field { display: flex; gap: 10px; }
   .shot-field-key {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--text-dimmer);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: 110px;
-    flex-shrink: 0;
-    padding-top: 1px;
+    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dimmer);
+    text-transform: uppercase; letter-spacing: 0.5px; width: 110px; flex-shrink: 0; padding-top: 1px;
   }
-
-  .shot-field-val {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text);
-    line-height: 1.7;
-    flex: 1;
-  }
+  .shot-field-val { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text); line-height: 1.7; flex: 1; }
 
   .prompt-block {
-    background: var(--bg-4);
-    border: 1px solid var(--border);
-    padding: 8px 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text);
-    line-height: 1.7;
-    cursor: pointer;
-    position: relative;
-    transition: border-color 0.15s;
+    background: var(--bg-4); border: 1px solid var(--border); padding: 8px 10px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text);
+    line-height: 1.7; cursor: pointer; position: relative; transition: border-color 0.15s;
   }
   .prompt-block:hover { border-color: var(--accent); }
+  .prompt-copy-hint { position: absolute; top: 4px; right: 8px; font-size: 8px; color: var(--text-dimmer); }
 
-  .prompt-copy-hint {
-    position: absolute;
-    top: 4px; right: 8px;
-    font-size: 8px;
-    color: var(--text-dimmer);
+  /* ONE-TAKE SPECIAL */
+  .onetake-card {
+    border: 1px solid var(--success); background: var(--bg-2); padding: 20px;
   }
+  .onetake-card-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  }
+  .onetake-card-badge {
+    font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 2px;
+    color: var(--success); border: 1px solid var(--success); padding: 2px 8px;
+  }
+  .onetake-card-title { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); }
 
-  /* REPLICATION RULES */
-  .rules-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .rule-item {
-    display: flex;
-    gap: 12px;
-    padding: 12px 14px;
-    border: 1px solid var(--border);
-    background: var(--bg-2);
-  }
-
-  .rule-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    color: var(--accent);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 20px;
-  }
-
-  .rule-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text);
-    line-height: 1.8;
-  }
+  /* NARRATIVE ANALYSIS */
+  .narrative-grid { display: flex; flex-direction: column; gap: 10px; }
+  .narrative-card { background: var(--bg-2); border: 1px solid var(--border); padding: 14px 16px; }
+  .narrative-card-label { font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--accent); margin-bottom: 6px; }
+  .narrative-card-body { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text); line-height: 1.8; white-space: pre-wrap; }
 
   /* FEEDING OUTPUT */
-  .feeding-box {
-    background: var(--bg-3);
-    border: 1px solid var(--accent-dim);
-    padding: 16px;
-    position: relative;
-  }
-
-  .feeding-box-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  .feeding-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text);
-    line-height: 1.8;
-    white-space: pre-wrap;
-  }
-
+  .feeding-box { background: var(--bg-3); border: 1px solid var(--accent-dim); padding: 16px; position: relative; }
+  .feeding-box-label { font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+  .feeding-text { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text); line-height: 1.8; white-space: pre-wrap; }
   .btn-copy-feed {
-    margin-top: 12px;
-    width: 100%;
-    padding: 8px;
-    background: transparent;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.15s;
+    margin-top: 12px; width: 100%; padding: 8px; background: transparent;
+    border: 1px solid var(--accent); color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px;
+    cursor: pointer; transition: all 0.15s;
   }
-  .btn-copy-feed:hover {
-    background: var(--accent);
-    color: var(--bg);
-  }
-  .btn-copy-feed.copied {
-    background: var(--success);
-    border-color: var(--success);
-    color: var(--bg);
-  }
+  .btn-copy-feed:hover { background: var(--accent); color: var(--bg); }
+  .btn-copy-feed.copied { background: var(--success); border-color: var(--success); color: var(--bg); }
 
-  /* RAW TEXT */
+  /* RAW */
   .raw-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dim);
-    line-height: 1.8;
-    white-space: pre-wrap;
-    background: var(--bg-2);
-    padding: 16px;
-    border: 1px solid var(--border);
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim);
+    line-height: 1.8; white-space: pre-wrap; background: var(--bg-2);
+    padding: 16px; border: 1px solid var(--border);
   }
 
-  /* MODAL — API KEYS */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-  }
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 100; }
   .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: var(--bg-2);
-    border: 1px solid var(--border-bright);
-    width: 440px;
-    padding: 24px;
-  }
-
-  .modal-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 3px;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-
-  .modal-field {
-    margin-bottom: 14px;
-  }
-
-  .modal-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-  }
-
-  .modal-input {
-    width: 100%;
-    background: var(--bg-3);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 8px 10px;
-    outline: none;
-  }
+  .modal { background: var(--bg-2); border: 1px solid var(--border-bright); width: 440px; padding: 24px; }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; color: var(--accent); margin-bottom: 20px; }
+  .modal-field { margin-bottom: 14px; }
+  .modal-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .modal-input { width: 100%; background: var(--bg-3); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 11px; padding: 8px 10px; outline: none; }
   .modal-input:focus { border-color: var(--accent); }
-
-  .modal-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 20px;
-  }
-
-  .btn-modal-save {
-    flex: 1;
-    padding: 10px;
-    background: var(--accent);
-    border: none;
-    color: var(--bg);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 15px;
-    letter-spacing: 2px;
-    cursor: pointer;
-  }
-
-  .btn-modal-cancel {
-    padding: 10px 20px;
-    background: transparent;
-    border: 1px solid var(--border-bright);
-    color: var(--text-dim);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 15px;
-    letter-spacing: 1px;
-    cursor: pointer;
-  }
+  .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+  .btn-modal-save { flex: 1; padding: 10px; background: var(--accent); border: none; color: var(--bg); font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 2px; cursor: pointer; }
+  .btn-modal-cancel { padding: 10px 20px; background: transparent; border: 1px solid var(--border-bright); color: var(--text-dim); font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; cursor: pointer; }
 
   /* TOAST */
   .toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--bg-3);
-    border: 1px solid var(--border-bright);
-    border-left: 3px solid var(--accent);
-    padding: 10px 16px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text);
-    z-index: 200;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.2s;
-    pointer-events: none;
+    position: fixed; bottom: 20px; right: 20px; background: var(--bg-3);
+    border: 1px solid var(--border-bright); border-left: 3px solid var(--accent);
+    padding: 10px 16px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text);
+    z-index: 200; opacity: 0; transform: translateY(8px); transition: all 0.2s; pointer-events: none;
   }
-  .toast.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .toast.show { opacity: 1; transform: translateY(0); }
   .toast.error { border-left-color: var(--danger); }
   .toast.success { border-left-color: var(--success); }
 
-  /* HIDDEN */
   .hidden { display: none !important; }
 </style>
 </head>
@@ -1055,7 +461,7 @@
       <div class="upload-config">
         <div class="config-row">
           <span class="config-label">TITLE</span>
-          <input class="config-input" id="input-title" placeholder="e.g. House of Errors — Urban Golf" />
+          <input class="config-input" id="input-title" placeholder="e.g. Gucci Attache — Coastal Drive" />
         </div>
         <div class="config-row" style="align-items:flex-start">
           <span class="config-label" style="padding-top:8px">GENRE</span>
@@ -1066,6 +472,16 @@
             <button class="genre-select-btn" data-genre="CINEMATIC FILM" onclick="selectGenre(this)">CINEMATIC FILM</button>
           </div>
         </div>
+        <div class="config-row onetake-row">
+          <span class="config-label onetake-label-text">ONE-TAKE</span>
+          <div class="toggle-wrap">
+            <div class="toggle-switch" id="onetake-toggle" onclick="toggleOnetake()">
+              <div class="toggle-knob"></div>
+            </div>
+            <span class="toggle-state" id="onetake-state">OFF</span>
+          </div>
+          <span class="onetake-badge" id="onetake-badge" style="display:none">SINGLE CONTINUOUS SHOT — T2I×1 + I2V×1</span>
+        </div>
       </div>
 
       <button class="btn-analyze" id="btn-analyze" onclick="startAnalysis()" disabled>ANALYZE</button>
@@ -1073,7 +489,7 @@
 
     <!-- PROGRESS VIEW -->
     <div class="view-progress hidden" id="view-progress">
-      <div class="progress-title">EXTRACTING PRODUCTION LANGUAGE</div>
+      <div class="progress-title">ANALYZING REFERENCE</div>
       <div class="progress-stage" id="progress-stage">INITIALIZING...</div>
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="progress-fill"></div>
@@ -1087,7 +503,10 @@
       <div class="result-header">
         <div class="result-title-block">
           <div class="result-video-title" id="result-title">—</div>
-          <div class="result-genre-badge" id="result-genre">—</div>
+          <div class="result-badges">
+            <div class="result-genre-badge" id="result-genre">—</div>
+            <div class="result-onetake-badge" id="result-onetake-badge">ONE-TAKE</div>
+          </div>
         </div>
         <div class="result-actions">
           <button class="btn-action" onclick="saveCurrentResult()">SAVE TO ARCHIVE</button>
@@ -1096,17 +515,14 @@
       </div>
 
       <div class="result-tabs">
-        <button class="tab-btn active" onclick="showTab('logic')" id="tab-logic">DIRECTORIAL LOGIC</button>
+        <button class="tab-btn active" onclick="showTab('strategy')" id="tab-strategy">STRATEGY</button>
         <button class="tab-btn" onclick="showTab('shots')" id="tab-shots">SHOT BREAKDOWN</button>
-        <button class="tab-btn" onclick="showTab('engine')" id="tab-engine">NARRATIVE ENGINE</button>
-        <button class="tab-btn" onclick="showTab('rules')" id="tab-rules">REPLICATION RULES</button>
+        <button class="tab-btn" onclick="showTab('narrative')" id="tab-narrative">NARRATIVE ANALYSIS</button>
         <button class="tab-btn" onclick="showTab('feeding')" id="tab-feeding">FEEDING OUTPUT</button>
         <button class="tab-btn" onclick="showTab('raw')" id="tab-raw">RAW</button>
       </div>
 
-      <div class="result-content" id="result-content">
-        <!-- dynamically filled -->
-      </div>
+      <div class="result-content" id="result-content"></div>
     </div>
 
   </div>
@@ -1134,61 +550,156 @@
 // ─── STATE ───────────────────────────────────────────────
 let selectedFile = null;
 let selectedGenre = null;
+let isOnetake = false;
 let currentResult = null;
 let activeArchiveId = null;
 let activeFilter = 'ALL';
-let activeTab = 'logic';
+let activeTab = 'strategy';
 
 const GEMINI_MODEL = 'gemini-3-flash-preview';
 
-const CODEX_PROMPT = `You are a professional film director and creative director analyzing a fashion/commercial video.
+// ─── PROMPTS ─────────────────────────────────────────────
+const CODEX_PROMPT_STANDARD = `You are an expert creative director and film analyst. Your task is to analyze this fashion/commercial/film video and extract structured intelligence that will be used to brief a director creating a NEW video.
 
-Your task is NOT to critique or review this video.
-Your task is to extract PRODUCTION LANGUAGE — the precise instructions a director would give to recreate this video or create a new video using the same creative sensibility.
-
-Analyze this video and output the following structure EXACTLY. Use the exact section headers shown.
+Output the following structure EXACTLY. Use the exact section headers shown.
 
 ---
 
-## DIRECTORIAL LOGIC
-What is the single core directorial decision that makes this video work?
-Not "what happens" — but what ONE structural or perceptual choice does the director make that the audience never consciously notices but completely controls their experience?
+## STRATEGY ANALYSIS
+
+**BRAND POSITIONING**
+What is the brand/product selling beyond the product itself? What lifestyle, emotion, or identity does this video promise to the viewer?
+
+**CORE MESSAGE**
+In one sentence: what must the viewer feel or believe after watching this?
+
+**TARGET PERSONA**
+Who is this video made for? Describe the aspirational identity this video speaks to.
+
+**PRODUCT EXPOSURE STRATEGY**
+How is the product shown — direct/indirect, frequency, context? What is the relationship between product visibility and narrative?
+
+**NARRATIVE STRUCTURE**
+Describe the beginning-middle-end arc in 2–3 sentences. What emotional journey does the viewer take?
+
+**VISUAL WORLD**
+Describe the aesthetic universe: color temperature, era/time reference, setting, mood. What does this world feel like?
 
 ---
 
 ## SHOT-BY-SHOT BREAKDOWN
+
 For each distinct shot, output:
 
-**SHOT [N]**
-- Camera position: [exact physical placement — ground level / eye level / overhead / etc.]
-- Lens behavior: [focal length feel — compression / expansion / macro / etc.]
-- Subject state: [what is physically happening with the subject]
-- Background control: [what is included / excluded / blurred / revealed]
-- Color & tone: [dominant color palette, contrast level, color temperature, any deliberate color treatment]
-- Rhythm & duration: [approximate cut length and tempo relationship to adjacent shots]
-- T2I PROMPT: [a single, precise prompt to recreate this exact frame as a still image]
-- I2V DIRECTION: [camera movement + subject movement + pacing instruction for this shot]
-- DIRECTORIAL PURPOSE: [in one sentence — why does THIS shot exist at THIS moment]
+**SHOT [N]** — [one-line summary of what this shot shows]
+
+- SUBJECT: [who/what is the primary subject and their state]
+- COMPOSITION: [framing — ECU / CU / MCU / MS / WS / EWS / aerial / etc.]
+- CAMERA MOVEMENT: [static / pan / tilt / track / dolly / handheld / drone / etc. + direction and speed]
+- LIGHTING: [light source, quality, direction, color temperature]
+- ACTION: [what physically happens in this shot]
+- LOCATION: [where this takes place, background elements]
+- DURATION: [approximate seconds]
+- TRANSITION OUT: [cut / dissolve / fade / none]
+- T2I PROMPT: [precise still image prompt to recreate this exact frame]
+- I2V DIRECTION: [camera movement + subject movement + pacing for this shot as video]
 
 ---
 
-## NARRATIVE ENGINE
-How does this video hold the viewer from first frame to last?
-Do not assume tension-release structure — identify the actual mechanism this video uses.
-Describe it with specific technical means:
-"Shots [N–N] achieve [perceptual state] by [specific method], so that shot [N] delivers [specific effect]."
-Include how the editing rhythm (cut lengths, pacing changes) participates in this mechanism.
+## NARRATIVE ANALYSIS
+
+**EDIT STRUCTURE**
+Describe the pacing pattern: how do cut lengths change across the video? Is there a rhythm shift? Where?
+
+**EMOTIONAL CURVE**
+Map the emotional journey: what does the viewer feel at the opening, the midpoint, and the close? What specific shots or transitions create each shift?
+
+**CLIMAX POINT**
+Which shot or moment is the emotional/visual peak of this video? What makes it land?
+
+**PRODUCT INTEGRATION PATTERN**
+How does product placement participate in the narrative — is it a plot point, a symbol, a background element? When and how does it appear relative to emotional peaks?
+
+**VISUAL MOTIF**
+Is there a recurring visual element (color, object, gesture, camera angle) that creates coherence across the video?
 
 ---
 
-## REPLICATION RULES
-List exactly 3 rules someone must follow to make a different video using the SAME directorial logic.
-These must be actionable constraints, not aesthetic descriptions.
-Each rule must be specific enough that violating it would produce a noticeably different result.
+Output in English. Be specific and observational. No generic praise — only what is actually in the video.`;
+
+const CODEX_PROMPT_ONETAKE = `You are an expert creative director and film analyst. This video is a SINGLE CONTINUOUS TAKE — do not break it into multiple shots.
+
+Output the following structure EXACTLY. Use the exact section headers shown.
 
 ---
 
-Output in English. Be specific. Be technical. No generic film vocabulary without concrete application to this specific video.`;
+## STRATEGY ANALYSIS
+
+**BRAND POSITIONING**
+What is the brand/product selling beyond the product itself? What lifestyle, emotion, or identity does this video promise to the viewer?
+
+**CORE MESSAGE**
+In one sentence: what must the viewer feel or believe after watching this?
+
+**TARGET PERSONA**
+Who is this video made for? Describe the aspirational identity this video speaks to.
+
+**PRODUCT EXPOSURE STRATEGY**
+How is the product shown — direct/indirect, frequency, context? What is the relationship between product visibility and narrative?
+
+**NARRATIVE STRUCTURE**
+Describe the single continuous arc in 2–3 sentences. What emotional journey does the viewer take within this one take?
+
+**VISUAL WORLD**
+Describe the aesthetic universe: color temperature, era/time reference, setting, mood. What does this world feel like?
+
+---
+
+## ONE-TAKE BREAKDOWN
+
+**VIDEO DURATION**
+[Approximate total duration in seconds]
+
+**OPENING FRAME**
+Describe the exact first frame: subject position, composition, lighting, background.
+
+**MOVEMENT PHASES**
+Describe how the camera and/or subject moves through the take. Break into phases only if there is a distinct change in movement direction or speed — not by time alone.
+
+For each phase:
+**PHASE [N]** — [what changes in this phase]
+- CAMERA: [movement type, direction, speed]
+- SUBJECT: [what the subject does]
+- BACKGROUND: [what comes into/out of frame]
+
+**CLOSING FRAME**
+Describe the exact last frame.
+
+**T2I PROMPT**
+[Precise still image prompt for the opening/most representative frame of this video]
+
+**I2V DIRECTION**
+[Single continuous instruction: camera start position → movement sequence → subject action → pacing → end state. Written as one flowing direction for a video generation tool.]
+
+---
+
+## NARRATIVE ANALYSIS
+
+**SINGLE-TAKE LOGIC**
+Why does this work as one continuous take? What would be lost if it were cut into multiple shots?
+
+**EMOTIONAL CURVE**
+Map the emotional journey within the single take: what does the viewer feel at the opening, midpoint, and close?
+
+**MOVEMENT AS NARRATIVE**
+How does the camera movement itself tell the story? What does the movement reveal or conceal?
+
+**VISUAL MOTIF**
+Is there a recurring visual element that creates coherence within this take?
+
+---
+
+Output in English. Be specific and observational. No generic praise — only what is actually in the video.`;
 
 // ─── GEMINI FILE API ──────────────────────────────────────
 async function uploadToGemini(file, apiKey) {
@@ -1218,7 +729,6 @@ async function uploadToGemini(file, apiKey) {
   logProgress(`File uploaded. ID: ${fileId}`);
   setProgress(25);
 
-  // Poll for ACTIVE status — 40 attempts × 5s = max 200s
   logProgress('Waiting for file processing...');
   for (let i = 0; i < 40; i++) {
     const statusRes = await fetch(
@@ -1226,11 +736,8 @@ async function uploadToGemini(file, apiKey) {
     );
     const statusData = await statusRes.json();
     const state = statusData?.state || statusData?.file?.state;
-    logProgress(`File processing... (${i + 1}/40, state: ${state || 'PROCESSING'})`);
-    if (state === 'ACTIVE') {
-      setProgress(45);
-      return fileUri;
-    }
+    logProgress(`Processing... (${i + 1}/40, state: ${state || 'PROCESSING'})`);
+    if (state === 'ACTIVE') { setProgress(45); return fileUri; }
     if (state === 'FAILED') throw new Error('File processing failed on Gemini side');
     if (i === 39) throw new Error('File processing timeout — try again');
     await sleep(5000);
@@ -1241,15 +748,17 @@ async function analyzeWithGemini(fileUri, apiKey) {
   logProgress('Sending to Gemini for analysis...');
   setProgress(50);
 
+  const prompt = isOnetake ? CODEX_PROMPT_ONETAKE : CODEX_PROMPT_STANDARD;
+
   const body = {
     contents: [{ parts: [
       { file_data: { mime_type: selectedFile.type || 'video/mp4', file_uri: fileUri } },
-      { text: CODEX_PROMPT }
+      { text: prompt }
     ]}],
-    generationConfig: { maxOutputTokens: 8192, temperature: 0.4 }
+    generationConfig: { maxOutputTokens: 8192, temperature: 0.3 }
   };
 
-  const retryDelays = [5000, 10000, 20000, 30000, 40000];
+  const retryDelays = [3000, 6000, 12000, 24000, 40000];
   const maxAttempts = 5;
   let lastError = null;
 
@@ -1263,7 +772,7 @@ async function analyzeWithGemini(fileUri, apiKey) {
         }
       }
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
         { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
       );
       if (res.status === 429 || res.status === 503 || res.status === 500) {
@@ -1304,11 +813,11 @@ async function startAnalysis() {
     logProgress('Parsing result...');
     setProgress(90);
 
-    const parsed = parseResult(rawText);
+    const parsed = isOnetake ? parseResultOnetake(rawText) : parseResult(rawText);
     const title = document.getElementById('input-title').value.trim() || selectedFile.name;
     const thumb = await generateThumbnail(selectedFile);
 
-    currentResult = { title, genre: selectedGenre, parsed, raw: rawText, thumb };
+    currentResult = { title, genre: selectedGenre, isOnetake, parsed, raw: rawText, thumb };
 
     setProgress(100);
     logProgress('Done.');
@@ -1316,7 +825,7 @@ async function startAnalysis() {
 
     renderResult(currentResult);
     showView('result');
-    showTab('logic');
+    showTab('strategy');
 
   } catch (err) {
     showToast(err.message, 'error');
@@ -1325,67 +834,154 @@ async function startAnalysis() {
   }
 }
 
-// ─── PARSE ───────────────────────────────────────────────
+// ─── PARSE — STANDARD ────────────────────────────────────
 function parseResult(text) {
   const sections = {};
 
-  const directorialMatch = text.match(/##\s*DIRECTORIAL LOGIC\s*([\s\S]*?)(?=##|$)/i);
-  sections.directorial = directorialMatch ? directorialMatch[1].trim() : '';
+  // STRATEGY ANALYSIS
+  const strategyMatch = text.match(/##\s*STRATEGY ANALYSIS\s*([\s\S]*?)(?=##\s*SHOT|$)/i);
+  const strategyRaw = strategyMatch ? strategyMatch[1].trim() : '';
+  sections.strategy = parseStrategy(strategyRaw);
 
+  // SHOT BREAKDOWN
   const shotMatch = text.match(/##\s*SHOT-BY-SHOT BREAKDOWN\s*([\s\S]*?)(?=##\s*NARRATIVE|$)/i);
   sections.shotsRaw = shotMatch ? shotMatch[1].trim() : '';
   sections.shots = parseShots(sections.shotsRaw);
 
-  const engineMatch = text.match(/##\s*NARRATIVE ENGINE\s*([\s\S]*?)(?=##\s*REPLICATION|$)/i);
-  sections.engine = engineMatch ? engineMatch[1].trim() : '';
-
-  const rulesMatch = text.match(/##\s*REPLICATION RULES\s*([\s\S]*?)(?=##|$)/i);
-  sections.rulesRaw = rulesMatch ? rulesMatch[1].trim() : '';
-  sections.rules = parseRules(sections.rulesRaw);
+  // NARRATIVE ANALYSIS
+  const narrativeMatch = text.match(/##\s*NARRATIVE ANALYSIS\s*([\s\S]*?)(?=##|$)/i);
+  sections.narrative = narrativeMatch ? parseNarrative(narrativeMatch[1].trim()) : {};
 
   return sections;
 }
 
+function parseStrategy(text) {
+  const keys = ['BRAND POSITIONING','CORE MESSAGE','TARGET PERSONA','PRODUCT EXPOSURE STRATEGY','NARRATIVE STRUCTURE','VISUAL WORLD'];
+  const result = {};
+  keys.forEach((key, i) => {
+    const nextKey = keys[i + 1];
+    const pattern = new RegExp(`\\*\\*${key}\\*\\*\\s*([\\s\\S]*?)(?=\\*\\*${nextKey ? nextKey : 'ZZZNOMATCH'}\\*\\*|$)`, 'i');
+    const m = text.match(pattern);
+    result[key] = m ? m[1].trim() : '';
+  });
+  return result;
+}
+
 function parseShots(text) {
   const shots = [];
-  const shotBlocks = text.split(/\*\*SHOT\s+\d+\*\*/i).filter(b => b.trim());
-  const nums = [...text.matchAll(/\*\*SHOT\s+(\d+)\*\*/gi)].map(m => m[1]);
+  const shotPattern = /\*\*SHOT\s+(\d+)\*\*\s*[—-]\s*([^\n]*)/gi;
+  const shotMatches = [...text.matchAll(shotPattern)];
 
-  shotBlocks.forEach((block, i) => {
+  shotMatches.forEach((match, i) => {
+    const num = match[1];
+    const summary = match[2].trim();
+    const startIdx = match.index + match[0].length;
+    const endIdx = shotMatches[i + 1] ? shotMatches[i + 1].index : text.length;
+    const block = text.slice(startIdx, endIdx);
+
+    const fieldKeys = ['SUBJECT','COMPOSITION','CAMERA MOVEMENT','LIGHTING','ACTION','LOCATION','DURATION','TRANSITION OUT','T2I PROMPT','I2V DIRECTION'];
     const fields = {};
-    const fieldKeys = ['Camera position','Lens behavior','Subject state','Background control',
-                       'Color & tone','Rhythm & duration','T2I PROMPT','I2V DIRECTION','DIRECTORIAL PURPOSE'];
     fieldKeys.forEach((key, ki) => {
-      const nextKey = fieldKeys[ki+1];
-      const pattern = new RegExp(`-\\s*${key}:([\\s\\S]*?)(?=-\\s*${nextKey ? nextKey.replace('&','\\&') : '$'}|$)`, 'i');
+      const nextKey = fieldKeys[ki + 1];
+      const pattern = new RegExp(`-\\s*${key}:([\\s\\S]*?)(?=-\\s*${nextKey ? nextKey : 'ZZZNOMATCH'}:|$)`, 'i');
       const m = block.match(pattern);
       fields[key] = m ? m[1].trim() : '';
     });
-    shots.push({ num: nums[i] || (i+1), fields });
+
+    shots.push({ num, summary, fields });
   });
   return shots;
 }
 
-function parseRules(text) {
-  const rules = [];
-  const lines = text.split('\n').filter(l => l.trim());
-  let current = '';
-  lines.forEach(line => {
-    if (/^\d+[\.\)]/.test(line.trim()) || /^\*\*Rule/.test(line.trim())) {
-      if (current) rules.push(current.trim());
-      current = line.replace(/^\d+[\.\)]\s*/, '').replace(/^\*\*Rule\s*\d+[:\s]*/i, '').trim();
-    } else {
-      current += ' ' + line.trim();
-    }
+function parseNarrative(text) {
+  const keys = ['EDIT STRUCTURE','EMOTIONAL CURVE','CLIMAX POINT','PRODUCT INTEGRATION PATTERN','VISUAL MOTIF'];
+  const result = {};
+  keys.forEach((key, i) => {
+    const nextKey = keys[i + 1];
+    const pattern = new RegExp(`\\*\\*${key}\\*\\*\\s*([\\s\\S]*?)(?=\\*\\*${nextKey ? nextKey : 'ZZZNOMATCH'}\\*\\*|$)`, 'i');
+    const m = text.match(pattern);
+    result[key] = m ? m[1].trim() : '';
   });
-  if (current) rules.push(current.trim());
-  return rules.slice(0, 3);
+  return result;
+}
+
+// ─── PARSE — ONE-TAKE ─────────────────────────────────────
+function parseResultOnetake(text) {
+  const sections = {};
+
+  const strategyMatch = text.match(/##\s*STRATEGY ANALYSIS\s*([\s\S]*?)(?=##\s*ONE-TAKE|$)/i);
+  sections.strategy = parseStrategy(strategyMatch ? strategyMatch[1].trim() : '');
+
+  const onetakeMatch = text.match(/##\s*ONE-TAKE BREAKDOWN\s*([\s\S]*?)(?=##\s*NARRATIVE|$)/i);
+  sections.onetake = parseOnetakeBreakdown(onetakeMatch ? onetakeMatch[1].trim() : '');
+
+  const narrativeMatch = text.match(/##\s*NARRATIVE ANALYSIS\s*([\s\S]*?)(?=##|$)/i);
+  sections.narrative = parseNarrativeOnetake(narrativeMatch ? narrativeMatch[1].trim() : '');
+
+  return sections;
+}
+
+function parseOnetakeBreakdown(text) {
+  const result = {};
+
+  const durationM = text.match(/\*\*VIDEO DURATION\*\*\s*([\s\S]*?)(?=\*\*OPENING FRAME\*\*|$)/i);
+  result.duration = durationM ? durationM[1].trim() : '';
+
+  const openM = text.match(/\*\*OPENING FRAME\*\*\s*([\s\S]*?)(?=\*\*MOVEMENT PHASES\*\*|$)/i);
+  result.openingFrame = openM ? openM[1].trim() : '';
+
+  const closeM = text.match(/\*\*CLOSING FRAME\*\*\s*([\s\S]*?)(?=\*\*T2I PROMPT\*\*|$)/i);
+  result.closingFrame = closeM ? closeM[1].trim() : '';
+
+  const t2iM = text.match(/\*\*T2I PROMPT\*\*\s*([\s\S]*?)(?=\*\*I2V DIRECTION\*\*|$)/i);
+  result.t2iPrompt = t2iM ? t2iM[1].trim() : '';
+
+  const i2vM = text.match(/\*\*I2V DIRECTION\*\*\s*([\s\S]*?)(?=$)/i);
+  result.i2vDirection = i2vM ? i2vM[1].trim() : '';
+
+  // Phases
+  const phasesM = text.match(/\*\*MOVEMENT PHASES\*\*\s*([\s\S]*?)(?=\*\*CLOSING FRAME\*\*|$)/i);
+  result.phases = [];
+  if (phasesM) {
+    const phasePattern = /\*\*PHASE\s+(\d+)\*\*\s*[—-]\s*([^\n]*)/gi;
+    const phaseMatches = [...phasesM[1].matchAll(phasePattern)];
+    const phasesText = phasesM[1];
+    phaseMatches.forEach((match, i) => {
+      const startIdx = match.index + match[0].length;
+      const endIdx = phaseMatches[i + 1] ? phaseMatches[i + 1].index : phasesText.length;
+      const block = phasesText.slice(startIdx, endIdx);
+      const phase = { num: match[1], summary: match[2].trim() };
+      ['CAMERA','SUBJECT','BACKGROUND'].forEach(k => {
+        const m = block.match(new RegExp(`-\\s*${k}:([^\\n]*)`, 'i'));
+        phase[k.toLowerCase()] = m ? m[1].trim() : '';
+      });
+      result.phases.push(phase);
+    });
+  }
+
+  return result;
+}
+
+function parseNarrativeOnetake(text) {
+  const keys = ['SINGLE-TAKE LOGIC','EMOTIONAL CURVE','MOVEMENT AS NARRATIVE','VISUAL MOTIF'];
+  const result = {};
+  keys.forEach((key, i) => {
+    const nextKey = keys[i + 1];
+    const escapedKey = key.replace('-', '\\-');
+    const pattern = new RegExp(`\\*\\*${escapedKey}\\*\\*\\s*([\\s\\S]*?)(?=\\*\\*${nextKey ? nextKey.replace('-','\\-') : 'ZZZNOMATCH'}\\*\\*|$)`, 'i');
+    const m = text.match(pattern);
+    result[key] = m ? m[1].trim() : '';
+  });
+  return result;
 }
 
 // ─── RENDER ──────────────────────────────────────────────
 function renderResult(result) {
   document.getElementById('result-title').textContent = result.title;
   document.getElementById('result-genre').textContent = result.genre;
+  const otBadge = document.getElementById('result-onetake-badge');
+  if (result.isOnetake) otBadge.classList.add('show');
+  else otBadge.classList.remove('show');
 }
 
 function showTab(tab) {
@@ -1398,87 +994,185 @@ function showTab(tab) {
   const p = currentResult?.parsed;
   if (!p) return;
 
-  if (tab === 'logic') {
-    content.innerHTML = `
-      <div class="section">
-        <div class="section-label">DIRECTORIAL LOGIC</div>
-        <div class="section-body">${renderMd(p.directorial)}</div>
-      </div>`;
+  if (tab === 'strategy') {
+    renderStrategyTab(content, p.strategy);
   } else if (tab === 'shots') {
-    const cards = p.shots.map((shot, i) => `
-      <div class="shot-card" id="shot-card-${i}">
-        <div class="shot-card-header" onclick="toggleShot(${i})">
-          <span class="shot-num">SHOT ${shot.num}</span>
-          <span class="shot-purpose">${escHtml(shot.fields['DIRECTORIAL PURPOSE'] || '')}</span>
-          <span class="shot-toggle">▼</span>
-        </div>
-        <div class="shot-card-body">
-          ${renderShotField('CAMERA', shot.fields['Camera position'])}
-          ${renderShotField('LENS', shot.fields['Lens behavior'])}
-          ${renderShotField('SUBJECT', shot.fields['Subject state'])}
-          ${renderShotField('BACKGROUND', shot.fields['Background control'])}
-          ${renderShotField('COLOR & TONE', shot.fields['Color & tone'])}
-          ${renderShotField('RHYTHM', shot.fields['Rhythm & duration'])}
-          <div class="shot-field">
-            <span class="shot-field-key">T2I PROMPT</span>
-            <div class="shot-field-val" style="flex:1">
-              <div class="prompt-block" onclick="copyText(this, '${escAttr(shot.fields['T2I PROMPT'])}')">
-                <span class="prompt-copy-hint">CLICK TO COPY</span>
-                ${escHtml(shot.fields['T2I PROMPT'])}
-              </div>
-            </div>
-          </div>
-          <div class="shot-field">
-            <span class="shot-field-key">I2V DIRECTION</span>
-            <div class="shot-field-val" style="flex:1">
-              <div class="prompt-block" onclick="copyText(this, '${escAttr(shot.fields['I2V DIRECTION'])}')">
-                <span class="prompt-copy-hint">CLICK TO COPY</span>
-                ${escHtml(shot.fields['I2V DIRECTION'])}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>`).join('');
-    content.innerHTML = `<div class="shot-grid">${cards}</div>`;
-
-  } else if (tab === 'engine') {
-    content.innerHTML = `
-      <div class="section">
-        <div class="section-label">NARRATIVE ENGINE</div>
-        <div class="section-body">${renderMd(p.engine)}</div>
-      </div>`;
-
-  } else if (tab === 'rules') {
-    const ruleItems = p.rules.map((r, i) => `
-      <div class="rule-item">
-        <span class="rule-num">${i+1}</span>
-        <span class="rule-text">${renderMd(r)}</span>
-      </div>`).join('');
-    content.innerHTML = `
-      <div class="section">
-        <div class="section-label">REPLICATION RULES</div>
-        <div class="rules-list">${ruleItems}</div>
-      </div>`;
-
+    renderShotsTab(content, p);
+  } else if (tab === 'narrative') {
+    renderNarrativeTab(content, p.narrative, currentResult.isOnetake);
   } else if (tab === 'feeding') {
-    const feedText = buildFeedingOutput(currentResult);
-    content.innerHTML = `
-      <div class="section">
-        <div class="section-label">GROUP C FEEDING OUTPUT</div>
-        <div class="feeding-box">
-          <div class="feeding-box-label">— PASTE INTO GROUP C SYSTEM PROMPT —</div>
-          <div class="feeding-text" id="feeding-text">${renderMd(feedText)}</div>
-          <button class="btn-copy-feed" id="btn-copy-feed" onclick="copyFeedingOutput()">COPY TO CLIPBOARD</button>
-        </div>
-      </div>`;
-
+    renderFeedingTab(content, currentResult);
   } else if (tab === 'raw') {
-    content.innerHTML = `
-      <div class="section">
-        <div class="section-label">RAW OUTPUT</div>
-        <div class="raw-text">${escHtml(currentResult.raw)}</div>
-      </div>`;
+    content.innerHTML = `<div class="section"><div class="section-label">RAW OUTPUT</div><div class="raw-text">${escHtml(currentResult.raw)}</div></div>`;
   }
+}
+
+function renderStrategyTab(content, strategy) {
+  if (!strategy) { content.innerHTML = '<div class="section"><div class="section-body">No strategy data.</div></div>'; return; }
+  const keys = ['BRAND POSITIONING','CORE MESSAGE','TARGET PERSONA','PRODUCT EXPOSURE STRATEGY','NARRATIVE STRUCTURE','VISUAL WORLD'];
+  const cards = keys.map(key => `
+    <div class="strategy-card">
+      <div class="strategy-card-label">${key}</div>
+      <div class="strategy-card-body">${renderMd(strategy[key] || '—')}</div>
+    </div>`).join('');
+  content.innerHTML = `<div class="strategy-grid">${cards}</div>`;
+}
+
+function renderShotsTab(content, p) {
+  if (currentResult.isOnetake) {
+    renderOnetakeTab(content, p.onetake);
+    return;
+  }
+  if (!p.shots || p.shots.length === 0) {
+    content.innerHTML = '<div class="section"><div class="section-body">No shots parsed.</div></div>'; return;
+  }
+  const cards = p.shots.map((shot, i) => `
+    <div class="shot-card" id="shot-card-${i}">
+      <div class="shot-card-header" onclick="toggleShot(${i})">
+        <span class="shot-num">SHOT ${shot.num}</span>
+        <span class="shot-summary">${escHtml(shot.summary || '')}</span>
+        <span class="shot-toggle">▼</span>
+      </div>
+      <div class="shot-card-body">
+        ${renderShotField('SUBJECT', shot.fields['SUBJECT'])}
+        ${renderShotField('COMPOSITION', shot.fields['COMPOSITION'])}
+        ${renderShotField('CAMERA', shot.fields['CAMERA MOVEMENT'])}
+        ${renderShotField('LIGHTING', shot.fields['LIGHTING'])}
+        ${renderShotField('ACTION', shot.fields['ACTION'])}
+        ${renderShotField('LOCATION', shot.fields['LOCATION'])}
+        ${renderShotField('DURATION', shot.fields['DURATION'])}
+        ${renderShotField('TRANSITION', shot.fields['TRANSITION OUT'])}
+        <div class="shot-field">
+          <span class="shot-field-key">T2I PROMPT</span>
+          <div class="shot-field-val" style="flex:1">
+            <div class="prompt-block" onclick="copyText(this, '${escAttr(shot.fields['T2I PROMPT'])}')">
+              <span class="prompt-copy-hint">CLICK TO COPY</span>
+              ${escHtml(shot.fields['T2I PROMPT'])}
+            </div>
+          </div>
+        </div>
+        <div class="shot-field">
+          <span class="shot-field-key">I2V DIRECTION</span>
+          <div class="shot-field-val" style="flex:1">
+            <div class="prompt-block" onclick="copyText(this, '${escAttr(shot.fields['I2V DIRECTION'])}')">
+              <span class="prompt-copy-hint">CLICK TO COPY</span>
+              ${escHtml(shot.fields['I2V DIRECTION'])}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+  content.innerHTML = `<div class="shot-grid">${cards}</div>`;
+}
+
+function renderOnetakeTab(content, ot) {
+  if (!ot) { content.innerHTML = '<div class="section"><div class="section-body">No data.</div></div>'; return; }
+
+  const phasesHtml = ot.phases && ot.phases.length > 0
+    ? ot.phases.map(ph => `
+        <div style="margin-bottom:10px; padding:10px 12px; border:1px solid var(--border); background:var(--bg-3);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1.5px;color:var(--accent);margin-bottom:6px;">PHASE ${ph.num} — ${escHtml(ph.summary)}</div>
+          ${renderShotField('CAMERA', ph.camera)}
+          ${renderShotField('SUBJECT', ph.subject)}
+          ${renderShotField('BACKGROUND', ph.background)}
+        </div>`).join('')
+    : '<div style="color:var(--text-dimmer);font-family:\'DM Mono\',monospace;font-size:10px;">No phases extracted.</div>';
+
+  content.innerHTML = `
+    <div class="onetake-card">
+      <div class="onetake-card-header">
+        <span class="onetake-card-badge">ONE-TAKE</span>
+        <span class="onetake-card-title">Duration: ${escHtml(ot.duration || '—')}</span>
+      </div>
+      <div class="section" style="margin-bottom:16px;">
+        <div class="section-label">OPENING FRAME</div>
+        <div class="section-body">${renderMd(ot.openingFrame || '—')}</div>
+      </div>
+      <div class="section" style="margin-bottom:16px;">
+        <div class="section-label">MOVEMENT PHASES</div>
+        ${phasesHtml}
+      </div>
+      <div class="section" style="margin-bottom:16px;">
+        <div class="section-label">CLOSING FRAME</div>
+        <div class="section-body">${renderMd(ot.closingFrame || '—')}</div>
+      </div>
+      <div class="section" style="margin-bottom:16px;">
+        <div class="section-label">T2I PROMPT</div>
+        <div class="prompt-block" onclick="copyText(this, '${escAttr(ot.t2iPrompt)}')">
+          <span class="prompt-copy-hint">CLICK TO COPY</span>
+          ${escHtml(ot.t2iPrompt || '—')}
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">I2V DIRECTION</div>
+        <div class="prompt-block" onclick="copyText(this, '${escAttr(ot.i2vDirection)}')">
+          <span class="prompt-copy-hint">CLICK TO COPY</span>
+          ${escHtml(ot.i2vDirection || '—')}
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderNarrativeTab(content, narrative, isOnetake) {
+  if (!narrative) { content.innerHTML = '<div class="section"><div class="section-body">No narrative data.</div></div>'; return; }
+  const keys = isOnetake
+    ? ['SINGLE-TAKE LOGIC','EMOTIONAL CURVE','MOVEMENT AS NARRATIVE','VISUAL MOTIF']
+    : ['EDIT STRUCTURE','EMOTIONAL CURVE','CLIMAX POINT','PRODUCT INTEGRATION PATTERN','VISUAL MOTIF'];
+  const cards = keys.map(key => `
+    <div class="narrative-card">
+      <div class="narrative-card-label">${key}</div>
+      <div class="narrative-card-body">${renderMd(narrative[key] || '—')}</div>
+    </div>`).join('');
+  content.innerHTML = `<div class="narrative-grid">${cards}</div>`;
+}
+
+function renderFeedingTab(content, result) {
+  const feedText = buildFeedingOutput(result);
+  content.innerHTML = `
+    <div class="section">
+      <div class="section-label">GROUP C FEEDING OUTPUT</div>
+      <div class="feeding-box">
+        <div class="feeding-box-label">— PASTE INTO GROUP C PHASE 2 —</div>
+        <div class="feeding-text" id="feeding-text">${renderMd(feedText)}</div>
+        <button class="btn-copy-feed" id="btn-copy-feed" onclick="copyFeedingOutput()">COPY TO CLIPBOARD</button>
+      </div>
+    </div>`;
+}
+
+function buildFeedingOutput(result) {
+  const p = result.parsed;
+  const s = p.strategy || {};
+  const n = p.narrative || {};
+  const isOt = result.isOnetake;
+
+  // Visual pattern from shots
+  let visualPattern = '';
+  if (!isOt && p.shots && p.shots.length > 0) {
+    const compositions = p.shots.map(sh => sh.fields['COMPOSITION']).filter(Boolean);
+    const lighting = p.shots.map(sh => sh.fields['LIGHTING']).filter(Boolean);
+    if (compositions.length > 0) visualPattern += `DOMINANT COMPOSITIONS: ${[...new Set(compositions)].slice(0,4).join(' / ')}\n`;
+    if (lighting.length > 0) visualPattern += `LIGHTING PATTERN: ${lighting[0]}`;
+  } else if (isOt && p.onetake) {
+    visualPattern = `ONE-TAKE — Duration: ${p.onetake.duration || '—'}`;
+  }
+
+  return `=== REFERENCE: ${result.title} ===
+GENRE: ${result.genre}${isOt ? ' · ONE-TAKE' : ''}
+
+--- STRATEGIC INTENT ---
+POSITIONING: ${s['BRAND POSITIONING'] || '—'}
+CORE MESSAGE: ${s['CORE MESSAGE'] || '—'}
+PRODUCT STRATEGY: ${s['PRODUCT EXPOSURE STRATEGY'] || '—'}
+VISUAL WORLD: ${s['VISUAL WORLD'] || '—'}
+
+--- NARRATIVE ---
+STRUCTURE: ${s['NARRATIVE STRUCTURE'] || '—'}
+EMOTIONAL CURVE: ${n['EMOTIONAL CURVE'] || n['EMOTIONAL CURVE'] || '—'}
+${!isOt ? `CLIMAX: ${n['CLIMAX POINT'] || '—'}` : `SINGLE-TAKE LOGIC: ${n['SINGLE-TAKE LOGIC'] || '—'}`}
+
+--- VISUAL LANGUAGE ---
+${visualPattern || n['VISUAL MOTIF'] || '—'}
+`;
 }
 
 function renderShotField(label, val) {
@@ -1488,22 +1182,19 @@ function renderShotField(label, val) {
   </div>`;
 }
 
-function buildFeedingOutput(result) {
-  const p = result.parsed;
-  return `=== REFERENCE: ${result.title} ===
-GENRE: ${result.genre}
-
---- NARRATIVE ENGINE ---
-${p.engine}
-
---- REPLICATION RULES ---
-${p.rules.map((r, i) => `${i+1}. ${r}`).join('\n')}
-`;
+function toggleShot(i) {
+  document.getElementById(`shot-card-${i}`).classList.toggle('expanded');
 }
 
-function toggleShot(i) {
-  const card = document.getElementById(`shot-card-${i}`);
-  card.classList.toggle('expanded');
+// ─── ONE-TAKE TOGGLE ──────────────────────────────────────
+function toggleOnetake() {
+  isOnetake = !isOnetake;
+  const toggle = document.getElementById('onetake-toggle');
+  const state = document.getElementById('onetake-state');
+  const badge = document.getElementById('onetake-badge');
+  toggle.classList.toggle('on', isOnetake);
+  state.textContent = isOnetake ? 'ON' : 'OFF';
+  badge.style.display = isOnetake ? 'inline-block' : 'none';
 }
 
 // ─── ARCHIVE ─────────────────────────────────────────────
@@ -1515,6 +1206,7 @@ function saveCurrentResult() {
     id,
     title: currentResult.title,
     genre: currentResult.genre,
+    isOnetake: currentResult.isOnetake,
     thumb: currentResult.thumb,
     parsed: currentResult.parsed,
     raw: currentResult.raw,
@@ -1558,10 +1250,14 @@ function renderArchiveList() {
         <div class="archive-name">${escHtml(e.title)}</div>
         <div class="archive-meta">
           <span class="archive-genre">${escHtml(e.genre)}</span>
+          ${e.isOnetake ? '<span class="archive-onetake">1-TAKE</span>' : ''}
           <span class="archive-date">${e.date}</span>
         </div>
       </div>
-      <button class="archive-delete" onclick="deleteEntry(event,'${e.id}')">✕</button>
+      <div class="archive-actions">
+        <button class="archive-btn-feed" onclick="quickFeed(event,'${e.id}')">FEED</button>
+        <button class="archive-delete" onclick="deleteEntry(event,'${e.id}')">✕</button>
+      </div>
     </div>`).join('');
 }
 
@@ -1573,7 +1269,20 @@ function loadArchiveEntry(id) {
   currentResult = entry;
   renderResult(entry);
   showView('result');
-  showTab('logic');
+  showTab('strategy');
+  renderArchiveList();
+}
+
+function quickFeed(e, id) {
+  e.stopPropagation();
+  const archives = getArchives();
+  const entry = archives[id];
+  if (!entry) return;
+  activeArchiveId = id;
+  currentResult = entry;
+  renderResult(entry);
+  showView('result');
+  showTab('feeding');
   renderArchiveList();
 }
 
@@ -1628,11 +1337,16 @@ function showUploadView() {
   activeArchiveId = null;
   selectedFile = null;
   selectedGenre = null;
+  isOnetake = false;
   document.getElementById('video-input').value = '';
   document.getElementById('file-info').classList.add('hidden');
   document.getElementById('input-title').value = '';
   document.querySelectorAll('.genre-select-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('btn-analyze').disabled = true;
+  // Reset onetake toggle
+  document.getElementById('onetake-toggle').classList.remove('on');
+  document.getElementById('onetake-state').textContent = 'OFF';
+  document.getElementById('onetake-badge').style.display = 'none';
   showView('upload');
   renderArchiveList();
 }
@@ -1658,9 +1372,7 @@ function checkAnalyzeReady() {
   document.getElementById('btn-analyze').disabled = !(selectedFile && selectedGenre);
 }
 
-function setProgress(pct) {
-  document.getElementById('progress-fill').style.width = pct + '%';
-}
+function setProgress(pct) { document.getElementById('progress-fill').style.width = pct + '%'; }
 
 function logProgress(msg) {
   const log = document.getElementById('progress-log');
@@ -1680,8 +1392,10 @@ function copyText(el, text) {
 }
 
 function copyFeedingOutput() {
-  const text = document.getElementById('feeding-text')?.textContent;
-  if (!text) return;
+  const el = document.getElementById('feeding-text');
+  if (!el) return;
+  // Get raw text from currentResult for clean copy
+  const text = buildFeedingOutput(currentResult);
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById('btn-copy-feed');
     btn.textContent = 'COPIED';
@@ -1703,14 +1417,14 @@ function escHtml(str) {
   return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function escAttr(str) {
+  return String(str || '').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+}
+
 function renderMd(str) {
-  // Convert **text** to <strong>text</strong>, then escape remaining html
   return String(str || '')
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--text)">$1</strong>');
-}
-function escAttr(str) {
-  return String(str || '').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
 }
 
 // ─── API KEY MODAL ────────────────────────────────────────
@@ -1718,11 +1432,7 @@ function openModal() {
   document.getElementById('modal-gemini').value = localStorage.getItem('gemini_key') || '';
   document.getElementById('modal-overlay').classList.add('open');
 }
-
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 function saveKeys() {
   const gemini = document.getElementById('modal-gemini').value.trim();
   if (gemini) localStorage.setItem('gemini_key', gemini);
@@ -1730,13 +1440,10 @@ function saveKeys() {
   updateApiStatus();
   showToast('API key saved', 'success');
 }
-
 function updateApiStatus() {
   const dot = document.getElementById('gemini-dot');
-  const lbl = document.getElementById('gemini-status');
   const key = localStorage.getItem('gemini_key');
-  if (key) { dot.classList.add('ok'); lbl.textContent = 'GEMINI'; }
-  else { dot.classList.remove('ok'); lbl.textContent = 'GEMINI'; }
+  if (key) dot.classList.add('ok'); else dot.classList.remove('ok');
 }
 
 // ─── DRAG & DROP ─────────────────────────────────────────
